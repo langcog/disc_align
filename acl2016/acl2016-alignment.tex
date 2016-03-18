@@ -58,7 +58,7 @@
 \begin{abstract}
 In conversation, speakers tend to ``accommodate'' or ``align'' to their partners, changing the style and substance of their communications to be more similar to their partners. We focus here on ``linguistic alignment,'' changes in word choice based on others' choices. Although linguistic alignment is observed across many different contexts and its degree correlates with important social factors such as power and likability, its origins are still uncertain.
 We build on a recent probabilistic model of alignment, using it to separate out the influence of words and word categories. We then compare alignment across contexts (telephone conversations vs. microblog replies).
-Our results show strong evidence of alignment, but it is primarily lexical rather than categorical. Furthermore, we find that discourse acts modulate alignment substantially. This evidence supports the view that alignment may arises from and interact with lexical choices related to the ongoing discourse.
+Our results show strong evidence of alignment, but it is primarily lexical rather than categorical. Furthermore, we find that discourse acts modulate alignment substantially. This evidence supports the view that alignment may arise from and interact with lexical choices related to the ongoing discourse.
 \end{abstract}
 
 \section{Introduction}
@@ -203,7 +203,7 @@ The remainder of the model is a hierarchy of normal distributions that bring cat
 
 \section{Experiments}
 
-Using the WHAM framework, we investigate the variation in alignment across different conversation contexts and across different discourse acts.
+We perform two experiments. First, we look at how lexical-level and category-level alignment interact, and find that on Twitter and telephone conversations, lexical alignment dominates categorical alignment.  We then use the telephone conversations to investigate the effect of discourse structure on alignment, focusing on the effect of backchannels.
 
 \begin{table}
 \centering
@@ -223,19 +223,19 @@ Pronoun   & \textit{it, you} & 55 & .17 & .16\\
 Quantifier  & \textit{few, many} & 23 & .028 & .025\\
 Tentative & \textit{maybe, perhaps} & 28 & .033 & .025\\
 \hline\end{tabular}
-\caption{Marker categories for linguistic alignment, with examples, number of distinct word lemmas, and token probability of in a reply in Switchboard and Twitter.}\label{tab:LIWC}
+\caption{Marker categories for linguistic alignment, with examples, number of distinct word lemmas, and token probability of in a reply in Switchboard and Twitter.}\label{table:liwc}
 \end{table}
 
 \subsection{Data}
 We use two corpora in these experiments. The first is a collection of Twitter conversations collected by \cite{DoyleFrank2015CMCL} to examine information density in conversation. This corpus focuses on conversations within a set of 14 mostly distinct subcommunities on Twitter, and contains 63,673 conversation threads, covering 228,923 total tweets.  We divide these conversations into message pairs, also called conversational turns, which are two consecutive tweets within a conversation thread.  The second tweet is always in reply to the first (according to the Twitter API), although this does not necessarily mean that the content of the reply is a response to the preceding tweet. Retweets (including explicit retweets and some common manual retweet methods) were removed automatically. This processing leaves us with 122,693 message pairs, spanning 2,815 users.  The tweets were parsed into word tokens using the Twokenizer \cite{OwoputiEtAl2013}.
 
-The second corpus is the SwDA version of the Switchboard corpus \cite{JurafskyShribergBiasca1997}, as compiled by Chris Potts\footnote{\url{http://compprag.christopherpotts.net/swda.html}} . This is a collection of transcribed telephone conversations with each utterance labeled with the discourse act it is performing (e.g., statement of opinion, signal of non-understanding).  It contains 221,616 total utterances in 1,155 conversations.  We combine consecutive utterances by the same speaker without interruption from the listener into a single message and treat consecutive pairs of messages from different speakers as conversation turns. [XXX nnumber of conversatiuonal turns]
+The second corpus is the SwDA version of the Switchboard corpus \cite{JurafskyShribergBiasca1997}, as compiled by Chris Potts\footnote{\url{http://compprag.christopherpotts.net/swda.html}} . This is a collection of transcribed telephone conversations with each utterance labeled with the discourse act it is performing (e.g., statement of opinion, signal of non-understanding).  It contains 221,616 total utterances in 1,155 conversations.  We combine consecutive utterances by the same speaker without interruption from the listener into a single message and treat consecutive pairs of messages from different speakers as conversation turns. This results in 110,615 message pairs.
 
 For both corpora, we use the Linguistic Inquiry and Word Count (LIWC) system to categorize words \cite{LIWC}.  We use a set of 11 categories that have shown alignment effects in previous work \cite{DNMGamonDumais2011}. These can be loosely grouped into a set of five syntactic categories (articles, conjunctions, prepositions, pronouns, and quantifiers) and six conceptual categories (certainty, discrepancy, exclusion, inclusion, negation, and tentative). Categories and example elements are shown in Table \ref{table:liwc}.  The words within these categories were manually lemmatized.
 
 \subsection{Experiment 1}
 
-Our first experiment examines how alignment differs across the lexical and categorical levels.
+Our first experiment examines how alignment differs across the lexical and categorical levels. We use the WHAM framework to infer alignment on word and category counts, and also introduce a measure to estimate the influence of one word in a category on other words in its category, the ``category-not-word'' alignment.
 
 \subsubsection{Levels of alignment and their interaction}
 

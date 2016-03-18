@@ -317,7 +317,7 @@ The second experiment examines how alignment differs depending on discourse act.
 \subsubsection{Discourse Acts}
 Different messages within a discourse serve different purposes, and this affects both their linguistic structure and their relationship with neighboring messages.  A simple yes/no question is likely to receive a short, constrained reply, while a statement of an opinion is more likely to yield a longer reply. In addition, different types of messages can either introduce new information to the conversation (e.g., statements, questions, offers) or look back at existing information (e.g., acknowledgments, reformulations, yes/no answers). We hypothesize that alignment will be substantially different depending on the discourse act, as speakers' conversational goals vary.
 
-We focus on a particular kind of discourse act, the backchannel \cite{Yngve1970}. Backchannels are highly common in Switchboard, accounting for almost 20\% of utterances, and include utterances such as single words signaling understanding or misunderstanding (\textit{yeah, uh-huh}) and simple messages expressing mild emotional resonance (\textit{It must have been tough}).  Backchannels are a particularly interesting case because on some categories it is important to align (e.g., matching the tentative or negative tone of a speaker) while in other categories it may be very difficult (e.g., backchannels rarely contain quantifiers or prepositions).
+We focus on a particular kind of discourse act, the backchannel \cite{Yngve1970}. Backchannels are highly common in Switchboard, accounting for almost 20\% of utterances, and include utterances such as single words signaling understanding or misunderstanding (\textit{yeah, uh-huh}) and simple messages expressing mild emotional resonance (\textit{It must have been tough}).  Backchannels are a particularly interesting case because on some categories it is important to align (e.g., matching the negative tone or certainty of a speaker) while in other categories it may be very difficult (e.g., backchannels rarely contain quantifiers or prepositions).
 
 In this experiment, we compare alignment in conversations containing backchannels with those whose backchannels have been removed. This is done by removing every utterance classified as a backchannel from the corpus and parsing the utterances into conversation turns as before.
 
@@ -329,6 +329,7 @@ In this experiment, we compare alignment in conversations containing backchannel
 \end{figure}
 
 \subsubsection{Results}
+Alignment values for the Switchboard corpus without backchannels are shown in Figure \ref{fig:swbdn-res}. As expected, alignment is on average higher without the backchannels ($p=.09$ for category, $p<.05$ for lexical and CNW), reflecting the constrained nature of backchannels.  However, two categories, certainty and negation, show greater alignment when backchannels are present.
 
 
 

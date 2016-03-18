@@ -1,23 +1,16 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  17 MAR 2016 12:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/MacPorts 2015_5) (preloaded format=pdflatex 2015.10.22)  18 MAR 2016 13:59
 entering extended mode
  restricted \write18 enabled.
- file:line:error style messages enabled.
  %&-line parsing enabled.
 **model_wham.tex
 (./model_wham.tex
 LaTeX2e <2015/01/01>
-Babel <3.9l> and hyphenation patterns for 79 languages loaded.
+Babel <3.9l> and hyphenation patterns for 2 languages loaded.
 
-./model_wham.tex:16: LaTeX Error: Environment tikzpicture undefined.
+! LaTeX Error: Environment tikzpicture undefined.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.16 \begin{tikzpicture}
-                        [x=1.7cm,y=1.8cm]
-? 
-./model_wham.tex:16: Emergency stop.
  ...                                              
                                                   
 l.16 \begin{tikzpicture}
@@ -26,13 +19,2522 @@ Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.16 \begin{tikzpicture}[
+                         x=1.7cm,y=1.8cm]
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no x in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 7 in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no y in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 8 in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no ] in font nullfont!
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 16--17
+[] 
+ []
+
+! Undefined control sequence.
+l.20   \node
+            [const] (base) {$\mathcal{C}$};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.20   \node[
+             const] (base) {$\mathcal{C}$};
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no ] in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no ) in font nullfont!
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 20.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 20.
+Missing character: There is no ; in font nullfont!
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 20--26
+[]
+ []
+
+
+Overfull \hbox (5.84865pt too wide) in paragraph at lines 20--26
+\OMS/cmsy/m/n/10 C$ 
+ []
+
+! Undefined control sequence.
+l.27   \node
+            [const,below=.8 of base] (align) {$\mathcal{N}$};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.27   \node[
+             const,below=.8 of base] (align) {$\mathcal{N}$};
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 8 in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no ] in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no ) in font nullfont!
+Missing character: There is no ; in font nullfont!
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 27--33
+[]
+ []
+
+
+Overfull \hbox (9.67848pt too wide) in paragraph at lines 27--33
+\OMS/cmsy/m/n/10 N$ 
+ []
+
+! Undefined control sequence.
+l.34   \node
+            [latent,right=.6 of base] (n_b_m) {$\eta^{base}$};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.34   \node[
+             latent,right=.6 of base] (n_b_m) {$\eta^{base}$};
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 6 in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no ] in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no n in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.34   \node[latent,right=.6 of base] (n_
+                                         b_m) {$\eta^{base}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.34   \node[latent,right=.6 of base] (n_b_
+                                           m) {$\eta^{base}$};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.34   \node[latent,right=.6 of base] (n_b_m) {$
+                                                \eta^{base}$};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.34 ...de[latent,right=.6 of base] (n_b_m) {$\eta
+                                                  ^{base}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten \endgroup.
+l.34 ...,right=.6 of base] (n_b_m) {$\eta^{base}$}
+                                                  ;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+Missing character: There is no ; in font nullfont!
+! Undefined control sequence.
+l.35   \node
+            [latent,right=.85 of n_b_m] (n_b_ms) {$\eta^{base}$};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 8 in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no n in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.35   \node[latent,right=.85 of n_
+                                   b_m] (n_b_ms) {$\eta^{base}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.35   \node[latent,right=.85 of n_b_
+                                     m] (n_b_ms) {$\eta^{base}$};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.35   \node[latent,right=.85 of n_b_m] (n_b_
+                                             ms) {$\eta^{base}$};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.35 ...ode[latent,right=.85 of n_b_m] (n_b_ms) {$
+                                                  \eta^{base}$};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.35 ...latent,right=.85 of n_b_m] (n_b_ms) {$\eta
+                                                  ^{base}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten \endgroup.
+l.35 ...ght=.85 of n_b_m] (n_b_ms) {$\eta^{base}$}
+                                                  ;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+Missing character: There is no ; in font nullfont!
+! Undefined control sequence.
+l.36   \node
+            [latent,right=.85 of n_b_ms] (n_b_mab) {$\eta^{base}$};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 8 in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no n in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.36   \node[latent,right=.85 of n_
+                                   b_ms] (n_b_mab) {$\eta^{base}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.36   \node[latent,right=.85 of n_b_
+                                     ms] (n_b_mab) {$\eta^{base}$};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.36   \node[latent,right=.85 of n_b_ms] (n_b_
+                                              mab) {$\eta^{base}$};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.36 ...e[latent,right=.85 of n_b_ms] (n_b_mab) {$
+                                                  \eta^{base}$};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.36 ...tent,right=.85 of n_b_ms] (n_b_mab) {$\eta
+                                                  ^{base}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten \endgroup.
+l.36 ...t=.85 of n_b_ms] (n_b_mab) {$\eta^{base}$}
+                                                  ;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+Missing character: There is no ; in font nullfont!
+! Undefined control sequence.
+l.37   \node
+            [latent,right=.85 of n_b_mab] (m_b_mab) {$\mu^{base}$};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 8 in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no n in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.37   \node[latent,right=.85 of n_
+                                   b_mab] (m_b_mab) {$\mu^{base}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.37   \node[latent,right=.85 of n_b_
+                                     mab] (m_b_mab) {$\mu^{base}$};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.37   \node[latent,right=.85 of n_b_mab] (m_b_
+                                               mab) {$\mu^{base}$};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.37 ...[latent,right=.85 of n_b_mab] (m_b_mab) {$
+                                                  \mu^{base}$};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.37 ...tent,right=.85 of n_b_mab] (m_b_mab) {$\mu
+                                                  ^{base}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten \endgroup.
+l.37 ...t=.85 of n_b_mab] (m_b_mab) {$\mu^{base}$}
+                                                  ;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+Missing character: There is no ; in font nullfont!
+! Undefined control sequence.
+l.38   \node
+            [obs,right=.8 of m_b_mab] (C_b_mab) {$C^{base}$};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 8 in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no m in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.38   \node[obs,right=.8 of m_
+                               b_mab] (C_b_mab) {$C^{base}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.38   \node[obs,right=.8 of m_b_
+                                 mab] (C_b_mab) {$C^{base}$};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.38   \node[obs,right=.8 of m_b_mab] (C_b_
+                                           mab) {$C^{base}$};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.38   \node[obs,right=.8 of m_b_mab] (C_b_mab) {$
+                                                  C^{base}$};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+Missing character: There is no C in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.38 ...de[obs,right=.8 of m_b_mab] (C_b_mab) {$C^
+                                                  {base}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten \endgroup.
+l.38 ...ight=.8 of m_b_mab] (C_b_mab) {$C^{base}$}
+                                                  ;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+Missing character: There is no ; in font nullfont!
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 34--39
+[]
+ []
+
+
+Overfull \hbox (36.7485pt too wide) in paragraph at lines 34--39
+[][]\OT1/cmr/m/n/10 )[]$$\OML/cmm/m/it/10 ^^Q[]$
+ []
+
+
+Overfull \hbox (65.71782pt too wide) in paragraph at lines 34--39
+[][]\OT1/cmr/m/n/10 ](\OML/cmm/m/it/10 n[][]s\OT1/cmr/m/n/10 )[]$$\OML/cmm/m/it
+/10 ^^Q[]$
+ []
+
+
+Overfull \hbox (75.29536pt too wide) in paragraph at lines 34--39
+[][]\OML/cmm/m/it/10 s\OT1/cmr/m/n/10 ](\OML/cmm/m/it/10 n[][]ab\OT1/cmr/m/n/10
+ )[]$$\OML/cmm/m/it/10 ^^Q[]$
+ []
+
+
+Overfull \hbox (83.6646pt too wide) in paragraph at lines 34--39
+[][]\OML/cmm/m/it/10 ab\OT1/cmr/m/n/10 ](\OML/cmm/m/it/10 m[][]ab\OT1/cmr/m/n/1
+0 )[]$$\OML/cmm/m/it/10 ^^V[]$
+ []
+
+
+Overfull \hbox (76.0062pt too wide) in paragraph at lines 34--39
+[][]\OML/cmm/m/it/10 ab\OT1/cmr/m/n/10 ](\OML/cmm/m/it/10 C[][]ab\OT1/cmr/m/n/1
+0 )[]$$[]$ 
+ []
+
+! Undefined control sequence.
+l.40   \node
+            [latent,right=.6 of align] (n_a_m) {$\eta^{align}$};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.40   \node[
+             latent,right=.6 of align] (n_a_m) {$\eta^{align}$};
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 6 in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no ] in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no n in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.40   \node[latent,right=.6 of align] (n_
+                                          a_m) {$\eta^{align}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.40   \node[latent,right=.6 of align] (n_a_
+                                            m) {$\eta^{align}$};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.40   \node[latent,right=.6 of align] (n_a_m) {$
+                                                 \eta^{align}$};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.40 ...e[latent,right=.6 of align] (n_a_m) {$\eta
+                                                  ^{align}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten \endgroup.
+l.40 ...ight=.6 of align] (n_a_m) {$\eta^{align}$}
+                                                  ;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+Missing character: There is no ; in font nullfont!
+! Undefined control sequence.
+l.41   \node
+            [latent,right=.75 of n_a_m] (n_a_ms) {$\eta^{align}$};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 7 in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no n in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.41   \node[latent,right=.75 of n_
+                                   a_m] (n_a_ms) {$\eta^{align}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.41   \node[latent,right=.75 of n_a_
+                                     m] (n_a_ms) {$\eta^{align}$};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.41   \node[latent,right=.75 of n_a_m] (n_a_
+                                             ms) {$\eta^{align}$};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.41 ...ode[latent,right=.75 of n_a_m] (n_a_ms) {$
+                                                  \eta^{align}$};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.41 ...latent,right=.75 of n_a_m] (n_a_ms) {$\eta
+                                                  ^{align}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten \endgroup.
+l.41 ...ht=.75 of n_a_m] (n_a_ms) {$\eta^{align}$}
+                                                  ;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+Missing character: There is no ; in font nullfont!
+! Undefined control sequence.
+l.42   \node
+            [latent,right=.75 of n_a_ms] (n_a_mab) {$\eta^{align}$};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 7 in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no n in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.42   \node[latent,right=.75 of n_
+                                   a_ms] (n_a_mab) {$\eta^{align}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.42   \node[latent,right=.75 of n_a_
+                                     ms] (n_a_mab) {$\eta^{align}$};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.42   \node[latent,right=.75 of n_a_ms] (n_a_
+                                              mab) {$\eta^{align}$};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...e[latent,right=.75 of n_a_ms] (n_a_mab) {$
+                                                  \eta^{align}$};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.42 ...tent,right=.75 of n_a_ms] (n_a_mab) {$\eta
+                                                  ^{align}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten \endgroup.
+l.42 ...=.75 of n_a_ms] (n_a_mab) {$\eta^{align}$}
+                                                  ;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+Missing character: There is no ; in font nullfont!
+! Undefined control sequence.
+l.43   \node
+            [latent,right=.75 of n_a_mab] (m_a_mab) {$\mu^{align}$};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 7 in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no n in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.43   \node[latent,right=.75 of n_
+                                   a_mab] (m_a_mab) {$\mu^{align}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.43   \node[latent,right=.75 of n_a_
+                                     mab] (m_a_mab) {$\mu^{align}$};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.43   \node[latent,right=.75 of n_a_mab] (m_a_
+                                               mab) {$\mu^{align}$};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.43 ...[latent,right=.75 of n_a_mab] (m_a_mab) {$
+                                                  \mu^{align}$};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.43 ...tent,right=.75 of n_a_mab] (m_a_mab) {$\mu
+                                                  ^{align}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten \endgroup.
+l.43 ...=.75 of n_a_mab] (m_a_mab) {$\mu^{align}$}
+                                                  ;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+Missing character: There is no ; in font nullfont!
+! Undefined control sequence.
+l.44   \node
+            [obs,right=.8 of m_a_mab] (C_a_mab) {$C^{align}$};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 8 in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no m in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.44   \node[obs,right=.8 of m_
+                               a_mab] (C_a_mab) {$C^{align}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.44   \node[obs,right=.8 of m_a_
+                                 mab] (C_a_mab) {$C^{align}$};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.44   \node[obs,right=.8 of m_a_mab] (C_a_
+                                           mab) {$C^{align}$};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.44   \node[obs,right=.8 of m_a_mab] (C_a_mab) {$
+                                                  C^{align}$};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+Missing character: There is no C in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.44 ...de[obs,right=.8 of m_a_mab] (C_a_mab) {$C^
+                                                  {align}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten \endgroup.
+l.44 ...ght=.8 of m_a_mab] (C_a_mab) {$C^{align}$}
+                                                  ;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+Missing character: There is no ; in font nullfont!
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 40--45
+[]
+ []
+
+
+Overfull \hbox (40.97891pt too wide) in paragraph at lines 40--45
+[][]\OT1/cmr/m/n/10 )[]$$\OML/cmm/m/it/10 ^^Q[]$
+ []
+
+
+Overfull \hbox (70.76921pt too wide) in paragraph at lines 40--45
+[][]\OT1/cmr/m/n/10 ](\OML/cmm/m/it/10 n[][]s\OT1/cmr/m/n/10 )[]$$\OML/cmm/m/it
+/10 ^^Q[]$
+ []
+
+
+Overfull \hbox (80.34676pt too wide) in paragraph at lines 40--45
+[][]\OML/cmm/m/it/10 s\OT1/cmr/m/n/10 ](\OML/cmm/m/it/10 n[][]ab\OT1/cmr/m/n/10
+ )[]$$\OML/cmm/m/it/10 ^^Q[]$
+ []
+
+
+Overfull \hbox (88.71599pt too wide) in paragraph at lines 40--45
+[][]\OML/cmm/m/it/10 ab\OT1/cmr/m/n/10 ](\OML/cmm/m/it/10 m[][]ab\OT1/cmr/m/n/1
+0 )[]$$\OML/cmm/m/it/10 ^^V[]$
+ []
+
+
+Overfull \hbox (81.05759pt too wide) in paragraph at lines 40--45
+[][]\OML/cmm/m/it/10 ab\OT1/cmr/m/n/10 ](\OML/cmm/m/it/10 C[][]ab\OT1/cmr/m/n/1
+0 )[]$$[]$ 
+ []
+
+! Undefined control sequence.
+l.47   \node
+            [const,above=1.02 of n_b_m] (marker) {Category};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.47   \node[
+             const,above=1.02 of n_b_m] (marker) {Category};
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no v in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 2 in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no n in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.47   \node[const,above=1.02 of n_
+                                   b_m] (marker) {Category};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.47   \node[const,above=1.02 of n_b_
+                                     m] (marker) {Category};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Undefined control sequence.
+l.48   \node
+            [const,above=1.06 of n_b_ms] (group) {\hspace{.75em} Marker};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Double subscript.
+l.48   \node[const,above=1.06 of n_b_
+                                     ms] (group) {\hspace{.75em} Marker};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Undefined control sequence.
+l.49   \node
+            [const,above=1.02 of n_b_mab] (dyad) {Dyad};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Double subscript.
+l.49   \node[const,above=1.02 of n_b_
+                                     mab] (dyad) {Dyad};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.50 
+     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 47--50
+[]
+ []
+
+
+Overfull \hbox (167.41757pt too wide) in paragraph at lines 47--50
+[][]\OT1/cmr/m/n/10 ](\OML/cmm/m/it/10 marker\OT1/cmr/m/n/10 )[]; [\OML/cmm/m/i
+t/10 const; above \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (192.79474pt too wide) in paragraph at lines 47--50
+\OT1/cmr/m/n/10 1\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 06\OML/cmm/m/it/10 ofn[][]s\
+OT1/cmr/m/n/10 ](\OML/cmm/m/it/10 group\OT1/cmr/m/n/10 )[]; [\OML/cmm/m/it/10 c
+onst; above \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (114.38988pt too wide) in paragraph at lines 47--50
+\OT1/cmr/m/n/10 1\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 02\OML/cmm/m/it/10 ofn[][]ab
+\OT1/cmr/m/n/10 ](\OML/cmm/m/it/10 dyad\OT1/cmr/m/n/10 )[];$ 
+ []
+
+! Undefined control sequence.
+l.53   \factor
+              [right=of n_b_m] {n_b_m_f} {above:$\mathcal{N}$} {} {};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.53   \factor[
+               right=of n_b_m] {n_b_m_f} {above:$\mathcal{N}$} {} {};
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no n in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.53   \factor[right=of n_
+                          b_m] {n_b_m_f} {above:$\mathcal{N}$} {} {};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.53   \factor[right=of n_b_
+                            m] {n_b_m_f} {above:$\mathcal{N}$} {} {};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.53   \factor[right=of n_b_m] {n_b_
+                                    m_f} {above:$\mathcal{N}$} {} {};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.53   \factor[right=of n_b_m] {n_b_m_
+                                      f} {above:$\mathcal{N}$} {} {};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.53   \factor[right=of n_b_m] {n_b_m_f} {above:$
+                                                 \mathcal{N}$} {} {};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+! LaTeX Error: \mathcal allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.53 ...right=of n_b_m] {n_b_m_f} {above:$\mathcal
+                                                  {N}$} {} {};
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no N in font nullfont!
+! Extra }, or forgotten $.
+<recently read> }
+                 
+l.53 ...=of n_b_m] {n_b_m_f} {above:$\mathcal{N}$}
+                                                   {} {};
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Undefined control sequence.
+l.54   \factor
+              [right=of n_b_ms] {n_b_ms_f} {above:$\mathcal{N}$} {} {};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Double subscript.
+l.54   \factor[right=of n_b_
+                            ms] {n_b_ms_f} {above:$\mathcal{N}$} {} {};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.54   \factor[right=of n_b_ms] {n_b_
+                                     ms_f} {above:$\mathcal{N}$} {} {};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.54 ...actor[right=of n_b_ms] {n_b_ms_f} {above:$
+                                                  \mathcal{N}$} {} {};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+! LaTeX Error: \mathcal allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.54 ...ght=of n_b_ms] {n_b_ms_f} {above:$\mathcal
+                                                  {N}$} {} {};
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no N in font nullfont!
+! Extra }, or forgotten $.
+<recently read> }
+                 
+l.54 ...f n_b_ms] {n_b_ms_f} {above:$\mathcal{N}$}
+                                                   {} {};
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Undefined control sequence.
+l.55   \factor
+              [right=of n_b_mab] {n_b_mab_f} {above:$\textrm{logit}^{-1}$} {...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Double subscript.
+l.55   \factor[right=of n_b_
+                            mab] {n_b_mab_f} {above:$\textrm{logit}^{-1}$} {...
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.55   \factor[right=of n_b_mab] {n_b_
+                                      mab_f} {above:$\textrm{logit}^{-1}$} {...
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.55 ...tor[right=of n_b_mab] {n_b_mab_f} {above:$
+                                                  \textrm{logit}^{-1}$} {} {};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.55 ...b_mab] {n_b_mab_f} {above:$\textrm{logit}^
+                                                  {-1}$} {} {};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten \endgroup.
+l.55 ... {n_b_mab_f} {above:$\textrm{logit}^{-1}$}
+                                                   {} {};
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+Missing character: There is no ; in font nullfont!
+! Undefined control sequence.
+l.56   \factor
+              [right=of m_b_mab] {m_b_mab_f} {below:Binom} {} {};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no m in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.56   \factor[right=of m_
+                          b_mab] {m_b_mab_f} {below:Binom} {} {};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.56   \factor[right=of m_b_
+                            mab] {m_b_mab_f} {below:Binom} {} {};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.56   \factor[right=of m_b_mab] {m_b_
+                                      mab_f} {below:Binom} {} {};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.57 
+     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 53--57
+[]
+ []
+
+
+Overfull \hbox (107.54568pt too wide) in paragraph at lines 53--57
+[][]\OT1/cmr/m/n/10 ][][]$$[][]; [\OML/cmm/m/it/10 right \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (133.74252pt too wide) in paragraph at lines 53--57
+\OML/cmm/m/it/10 ofn[][]s\OT1/cmr/m/n/10 ][][]$$[][]; [\OML/cmm/m/it/10 right \
+OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (133.1899pt too wide) in paragraph at lines 53--57
+\OML/cmm/m/it/10 ofn[][]ab\OT1/cmr/m/n/10 ][][]$logit$[]$
+ []
+
+
+Overfull \hbox (125.79927pt too wide) in paragraph at lines 53--57
+[][]\OML/cmm/m/it/10 ab\OT1/cmr/m/n/10 ][][][][];$ 
+ []
+
+! Undefined control sequence.
+l.58   \factor
+              [right=of n_a_m] {n_a_m_f} {above:$\mathcal{N}$} {} {};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.58   \factor[
+               right=of n_a_m] {n_a_m_f} {above:$\mathcal{N}$} {} {};
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no n in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.58   \factor[right=of n_
+                          a_m] {n_a_m_f} {above:$\mathcal{N}$} {} {};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.58   \factor[right=of n_a_
+                            m] {n_a_m_f} {above:$\mathcal{N}$} {} {};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.58   \factor[right=of n_a_m] {n_a_
+                                    m_f} {above:$\mathcal{N}$} {} {};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.58   \factor[right=of n_a_m] {n_a_m_
+                                      f} {above:$\mathcal{N}$} {} {};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.58   \factor[right=of n_a_m] {n_a_m_f} {above:$
+                                                 \mathcal{N}$} {} {};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+! LaTeX Error: \mathcal allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.58 ...right=of n_a_m] {n_a_m_f} {above:$\mathcal
+                                                  {N}$} {} {};
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no N in font nullfont!
+! Extra }, or forgotten $.
+<recently read> }
+                 
+l.58 ...=of n_a_m] {n_a_m_f} {above:$\mathcal{N}$}
+                                                   {} {};
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Undefined control sequence.
+l.59   \factor
+              [right=of n_a_ms] {n_a_ms_f} {above:$\mathcal{N}$} {} {};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Double subscript.
+l.59   \factor[right=of n_a_
+                            ms] {n_a_ms_f} {above:$\mathcal{N}$} {} {};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.59   \factor[right=of n_a_ms] {n_a_
+                                     ms_f} {above:$\mathcal{N}$} {} {};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.59 ...actor[right=of n_a_ms] {n_a_ms_f} {above:$
+                                                  \mathcal{N}$} {} {};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+! LaTeX Error: \mathcal allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.59 ...ght=of n_a_ms] {n_a_ms_f} {above:$\mathcal
+                                                  {N}$} {} {};
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no N in font nullfont!
+! Extra }, or forgotten $.
+<recently read> }
+                 
+l.59 ...f n_a_ms] {n_a_ms_f} {above:$\mathcal{N}$}
+                                                   {} {};
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Undefined control sequence.
+l.60   \factor
+              [right=of n_a_mab] {n_a_mab_f} {below:$\textrm{logit}^{-1}$} {...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Double subscript.
+l.60   \factor[right=of n_a_
+                            mab] {n_a_mab_f} {below:$\textrm{logit}^{-1}$} {...
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.60   \factor[right=of n_a_mab] {n_a_
+                                      mab_f} {below:$\textrm{logit}^{-1}$} {...
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.60 ...tor[right=of n_a_mab] {n_a_mab_f} {below:$
+                                                  \textrm{logit}^{-1}$} {} {};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.60 ...a_mab] {n_a_mab_f} {below:$\textrm{logit}^
+                                                  {-1}$} {} {};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten \endgroup.
+l.60 ... {n_a_mab_f} {below:$\textrm{logit}^{-1}$}
+                                                   {} {};
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+Missing character: There is no ; in font nullfont!
+! Undefined control sequence.
+l.61   \factor
+              [right=of m_a_mab] {m_a_mab_f} {above:Binom} {} {};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no m in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.61   \factor[right=of m_
+                          a_mab] {m_a_mab_f} {above:Binom} {} {};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.61   \factor[right=of m_a_
+                            mab] {m_a_mab_f} {above:Binom} {} {};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.61   \factor[right=of m_a_mab] {m_a_
+                                      mab_f} {above:Binom} {} {};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.62 
+     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 58--62
+[]
+ []
+
+
+Overfull \hbox (109.18765pt too wide) in paragraph at lines 58--62
+[][]\OT1/cmr/m/n/10 ][][]$$[][]; [\OML/cmm/m/it/10 right \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (135.38449pt too wide) in paragraph at lines 58--62
+\OML/cmm/m/it/10 ofn[][]s\OT1/cmr/m/n/10 ][][]$$[][]; [\OML/cmm/m/it/10 right \
+OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (134.94879pt too wide) in paragraph at lines 58--62
+\OML/cmm/m/it/10 ofn[][]ab\OT1/cmr/m/n/10 ][][]$logit$[]$
+ []
+
+
+Overfull \hbox (127.32431pt too wide) in paragraph at lines 58--62
+[][]\OML/cmm/m/it/10 ab\OT1/cmr/m/n/10 ][][][][];$ 
+ []
+
+! Undefined control sequence.
+l.78   \node
+            [obs,above=.35 of m_b_mab_f] (N_b_mab) {$N^{base}$};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.78   \node[
+             obs,above=.35 of m_b_mab_f] (N_b_mab) {$N^{base}$};
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no v in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 3 in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no m in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.78   \node[obs,above=.35 of m_
+                                b_mab_f] (N_b_mab) {$N^{base}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.78   \node[obs,above=.35 of m_b_
+                                  mab_f] (N_b_mab) {$N^{base}$};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.78   \node[obs,above=.35 of m_b_mab_f] (N_b_
+                                              mab) {$N^{base}$};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.78 ...e[obs,above=.35 of m_b_mab_f] (N_b_mab) {$
+                                                  N^{base}$};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+Missing character: There is no N in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.78 ...obs,above=.35 of m_b_mab_f] (N_b_mab) {$N^
+                                                  {base}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten \endgroup.
+l.78 ...e=.35 of m_b_mab_f] (N_b_mab) {$N^{base}$}
+                                                  ;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+Missing character: There is no ; in font nullfont!
+! Undefined control sequence.
+l.79   \node
+            [obs,below=.35 of m_a_mab_f] (N_a_mab) {$N^{align}$};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 3 in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no m in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.79   \node[obs,below=.35 of m_
+                                a_mab_f] (N_a_mab) {$N^{align}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.79   \node[obs,below=.35 of m_a_
+                                  mab_f] (N_a_mab) {$N^{align}$};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.79   \node[obs,below=.35 of m_a_mab_f] (N_a_
+                                              mab) {$N^{align}$};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.79 ...e[obs,below=.35 of m_a_mab_f] (N_a_mab) {$
+                                                  N^{align}$};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+Missing character: There is no N in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.79 ...obs,below=.35 of m_a_mab_f] (N_a_mab) {$N^
+                                                  {align}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten \endgroup.
+l.79 ...=.35 of m_a_mab_f] (N_a_mab) {$N^{align}$}
+                                                  ;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+Missing character: There is no ; in font nullfont!
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 78--80
+[]
+ []
+
+
+Overfull \hbox (82.07777pt too wide) in paragraph at lines 78--80
+[][]\OML/cmm/m/it/10 ab[]\OT1/cmr/m/n/10 ](\OML/cmm/m/it/10 N[][]ab\OT1/cmr/m/n
+/10 )[]$$[]$
+ []
+
+
+Overfull \hbox (87.12917pt too wide) in paragraph at lines 78--80
+[][]\OML/cmm/m/it/10 ab[]\OT1/cmr/m/n/10 ](\OML/cmm/m/it/10 N[][]ab\OT1/cmr/m/n
+/10 )[]$$[]$ 
+ []
+
+! Undefined control sequence.
+l.82   \edge
+            {base}{n_b_m};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.82   \edge{b
+              ase}{n_b_m};
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no b in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.82   \edge{base}{n_
+                     b_m};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.82   \edge{base}{n_b_
+                       m};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Extra }, or forgotten $.
+l.82   \edge{base}{n_b_m}
+                         ;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Undefined control sequence.
+l.83   \factoredge
+                   {n_b_m}  {n_b_m_f}     {n_b_ms} ; %
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Double subscript.
+l.83   \factoredge {n_b_
+                        m}  {n_b_m_f}     {n_b_ms} ; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.83   \factoredge {n_b_m}  {n_b_
+                                 m_f}     {n_b_ms} ; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.83   \factoredge {n_b_m}  {n_b_m_
+                                   f}     {n_b_ms} ; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.83   \factoredge {n_b_m}  {n_b_m_f}     {n_b_
+                                               ms} ; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Undefined control sequence.
+l.84   \factoredge
+                   {n_b_ms}  {n_b_ms_f}     {n_b_mab} ; %
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Double subscript.
+l.84   \factoredge {n_b_
+                        ms}  {n_b_ms_f}     {n_b_mab} ; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.84   \factoredge {n_b_ms}  {n_b_
+                                  ms_f}     {n_b_mab} ; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.84   \factoredge {n_b_ms}  {n_b_ms_f}     {n_b_
+                                                 mab} ; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Undefined control sequence.
+l.85   \factoredge
+                   {n_b_mab}  {n_b_mab_f}     {m_b_mab} ; %
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Double subscript.
+l.85   \factoredge {n_b_
+                        mab}  {n_b_mab_f}     {m_b_mab} ; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.85   \factoredge {n_b_mab}  {n_b_
+                                   mab_f}     {m_b_mab} ; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.85 ...actoredge {n_b_mab}  {n_b_mab_f}     {m_b_
+                                                  mab} ; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Undefined control sequence.
+l.86   \factoredge
+                   {m_b_mab,N_b_mab} {m_b_mab_f} {C_b_mab}; %
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Double subscript.
+l.86   \factoredge {m_b_
+                        mab,N_b_mab} {m_b_mab_f} {C_b_mab}; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.86   \factoredge {m_b_mab,N_b_
+                                mab} {m_b_mab_f} {C_b_mab}; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.86   \factoredge {m_b_mab,N_b_mab} {m_b_
+                                          mab_f} {C_b_mab}; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.86 ...oredge {m_b_mab,N_b_mab} {m_b_mab_f} {C_b_
+                                                  mab}; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.87 
+     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (408.53906pt too wide) in paragraph at lines 82--87
+[]$[][]\OT1/cmr/m/n/10 ; [][][]; [][][]; [][][]; [][][];$ 
+ []
+
+! Undefined control sequence.
+l.88    \edge
+             {align}{n_a_m};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.88    \edge{a
+               lign}{n_a_m};
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no a in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no n in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.88    \edge{align}{n_
+                       a_m};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.88    \edge{align}{n_a_
+                         m};
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Extra }, or forgotten $.
+l.88    \edge{align}{n_a_m}
+                           ;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Undefined control sequence.
+l.89   \factoredge
+                   {n_a_m}  {n_a_m_f}     {n_a_ms} ; %
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Double subscript.
+l.89   \factoredge {n_a_
+                        m}  {n_a_m_f}     {n_a_ms} ; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.89   \factoredge {n_a_m}  {n_a_
+                                 m_f}     {n_a_ms} ; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.89   \factoredge {n_a_m}  {n_a_m_
+                                   f}     {n_a_ms} ; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.89   \factoredge {n_a_m}  {n_a_m_f}     {n_a_
+                                               ms} ; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Undefined control sequence.
+l.90   \factoredge
+                   {n_a_ms}  {n_a_ms_f}     {n_a_mab} ; %
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Double subscript.
+l.90   \factoredge {n_a_
+                        ms}  {n_a_ms_f}     {n_a_mab} ; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.90   \factoredge {n_a_ms}  {n_a_
+                                  ms_f}     {n_a_mab} ; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.90   \factoredge {n_a_ms}  {n_a_ms_f}     {n_a_
+                                                 mab} ; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Undefined control sequence.
+l.91   \factoredge
+                   {n_a_mab,n_b_mab}  {n_a_mab_f}     {m_a_mab} ; %
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Double subscript.
+l.91   \factoredge {n_a_
+                        mab,n_b_mab}  {n_a_mab_f}     {m_a_mab} ; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.91   \factoredge {n_a_mab,n_b_
+                                mab}  {n_a_mab_f}     {m_a_mab} ; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.91   \factoredge {n_a_mab,n_b_mab}  {n_a_
+                                           mab_f}     {m_a_mab} ; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.91 ...e {n_a_mab,n_b_mab}  {n_a_mab_f}     {m_a_
+                                                  mab} ; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Undefined control sequence.
+l.92   \factoredge
+                   {m_a_mab,N_a_mab} {m_a_mab_f} {C_a_mab}; %
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Double subscript.
+l.92   \factoredge {m_a_
+                        mab,N_a_mab} {m_a_mab_f} {C_a_mab}; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.92   \factoredge {m_a_mab,N_a_
+                                mab} {m_a_mab_f} {C_a_mab}; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.92   \factoredge {m_a_mab,N_a_mab} {m_a_
+                                          mab_f} {C_a_mab}; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.92 ...oredge {m_a_mab,N_a_mab} {m_a_mab_f} {C_a_
+                                                  mab}; %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.96 
+     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (451.66992pt too wide) in paragraph at lines 88--96
+[]$[][]\OT1/cmr/m/n/10 ; [][][]; [][][]; [][][]; [][][];$ 
+ []
+
+! Undefined control sequence.
+l.99   \plate
+              {pairplate} { %
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.99   \plate {p
+                airplate} { %
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no p in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no N in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.100     (N_
+             b_mab)(C_b_mab) %
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.100     (N_b_
+               mab)(C_b_mab) %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.100     (N_b_mab)(C_b_
+                        mab) %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.101     (m_b_
+               mab)(n_b_mab) %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.101     (m_b_mab)(n_b_
+                        mab) %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.102     (N_a_
+               mab)(C_a_mab) %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.102     (N_a_mab)(C_a_
+                        mab) %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.103     (m_a_
+               mab)(n_a_mab) %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.103     (m_a_mab)(n_a_
+                        mab) %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Extra }, or forgotten $.
+l.104   }
+          {$(a,b) \in D$}; %
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.104   } {$
+            (a,b) \in D$}; %
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+Missing character: There is no ( in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no ) in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.104   } {$(a,b) \in
+                      D$}; %
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+Missing character: There is no ; in font nullfont!
+! Undefined control sequence.
+l.105   \plate
+               {subpopplate} { %
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no ) in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no n in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.107     (n_
+             b_ms) (n_a_ms) %
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.107     (n_b_
+               ms) (n_a_ms) %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.107     (n_b_ms) (n_a_
+                        ms) %
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Extra }, or forgotten $.
+l.108   }
+          {$m \in s$} ; %
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.108   } {$
+            m \in s$} ; %
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+Missing character: There is no m in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.108   } {$m \in
+                  s$} ; %
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+Missing character: There is no ; in font nullfont!
+! Undefined control sequence.
+l.109   \plate
+               {} { %
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no ( in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no ) in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no n in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.111     (n_
+             b_m) (n_a_m)
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.111     (n_b_
+               m) (n_a_m)
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.111     (n_b_m) (n_a_
+                       m)
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Extra }, or forgotten $.
+l.112   }
+          {$s \in S$} ; %
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.112   } {$
+            s \in S$} ; %
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+Missing character: There is no s in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.112   } {$s \in
+                  S$} ; %
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+Missing character: There is no ; in font nullfont!
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 99--113
+[]
+ []
+
+
+Overfull \hbox (283.03415pt too wide) in paragraph at lines 99--113
+[][]\OML/cmm/m/it/10 ab\OT1/cmr/m/n/10 )(\OML/cmm/m/it/10 C[][]ab\OT1/cmr/m/n/1
+0 )(\OML/cmm/m/it/10 m[][]ab\OT1/cmr/m/n/10 )(\OML/cmm/m/it/10 n[][]ab\OT1/cmr/
+m/n/10 )(\OML/cmm/m/it/10 N[][]ab\OT1/cmr/m/n/10 )(\OML/cmm/m/it/10 C[][]ab\OT1
+/cmr/m/n/10 )(\OML/cmm/m/it/10 m[][]ab\OT1/cmr/m/n/10 )(\OML/cmm/m/it/10 n[][]a
+b\OT1/cmr/m/n/10 )[]$
+ []
+
+
+Overfull \hbox (6.66669pt too wide) in paragraph at lines 99--113
+\OMS/cmsy/m/n/10 2
+ []
+
+
+Overfull \hbox (8.55695pt too wide) in paragraph at lines 99--113
+\OML/cmm/m/it/10 D$
+ []
+
+
+Overfull \hbox (51.09059pt too wide) in paragraph at lines 99--113
+[][]\OML/cmm/m/it/10 s\OT1/cmr/m/n/10 )(\OML/cmm/m/it/10 n[][]s\OT1/cmr/m/n/10 
+)[]$
+ []
+
+
+Overfull \hbox (6.66669pt too wide) in paragraph at lines 99--113
+\OMS/cmsy/m/n/10 2
+ []
+
+
+Overfull \hbox (4.6875pt too wide) in paragraph at lines 99--113
+\OML/cmm/m/it/10 s$
+ []
+
+
+Overfull \hbox (41.71559pt too wide) in paragraph at lines 99--113
+[][]\OT1/cmr/m/n/10 )(\OML/cmm/m/it/10 n[][]\OT1/cmr/m/n/10 )[]$
+ []
+
+
+Overfull \hbox (6.66669pt too wide) in paragraph at lines 99--113
+\OMS/cmsy/m/n/10 2
+ []
+
+
+Overfull \hbox (6.70831pt too wide) in paragraph at lines 99--113
+\OML/cmm/m/it/10 S$
+ []
+
+
+! LaTeX Error: \begin{document} ended by \end{tikzpicture}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.114 \end{tikzpicture}
+                       
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.114 \end{tikzpicture}
+                       
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.114 \end{tikzpicture}
+                       
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+)
+! Emergency stop.
+<*> model_wham.tex
+                  
+*** (job aborted, no legal \end found)
+
  
 Here is how much of TeX's memory you used:
- 7 strings out of 493089
- 292 string characters out of 6134842
- 53199 words of memory out of 5000000
- 3591 multiletter control sequences out of 15000+600000
+ 10 strings out of 495004
+ 212 string characters out of 6181262
+ 50205 words of memory out of 5000000
+ 3345 multiletter control sequences out of 15000+600000
  3640 words of font info for 14 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 5i,0n,4p,79b,16s stack positions out of 5000i,500n,10000p,200000b,80000s
-./model_wham.tex:16:  ==> Fatal error occurred, no output PDF file produced!
+ 14 hyphenation exceptions out of 8191
+ 18i,2n,12p,108b,71s stack positions out of 5000i,500n,10000p,200000b,80000s
+!  ==> Fatal error occurred, no output PDF file produced!

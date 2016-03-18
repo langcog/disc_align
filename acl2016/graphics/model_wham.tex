@@ -18,38 +18,38 @@
   % Nodes
 
   \node[const] (base) {$\mathcal{C}$};
-%  \node[latent,right=.6 of base] (n_b_m) {$\eta^{base}_m$}; 
+%  \node[latent,right=.6 of base] (n_b_m) {$\eta^{base}_m$};
 %  \node[latent,right=.8 of n_b_m] (n_b_ms) {$\eta^{base}_{m,s}$};
 %  \node[latent,right=.8 of n_b_ms] (n_b_mab) {$\eta^{base}_{m,a,b}$};
 %  \node[latent,right=.8 of n_b_mab] (m_b_mab) {$\mu^{base}_{m,a,b}$};
 %  \node[obs,right=.8 of m_b_mab] (C_b_mab) {$C^{base}_{m,a,b}$};
 
   \node[const,below=.8 of base] (align) {$\mathcal{N}$};
-% \node[latent,right=.6 of align] (n_a_m) {$\eta^{align}_m$}; 
+% \node[latent,right=.6 of align] (n_a_m) {$\eta^{align}_m$};
 % \node[latent,right=.75 of n_a_m] (n_a_ms) {$\eta^{align}_{m,s}$};
 % \node[latent,right=.75 of n_a_ms] (n_a_mab) {$\eta^{align}_{m,a,b}$};
 % \node[latent,right=.75 of n_a_mab] (m_a_mab) {$\mu^{align}_{m,a,b}$};
 % \node[obs,right=.8 of m_a_mab] (C_a_mab) {$C^{align}_{m,a,b}$};
 
-  \node[latent,right=.6 of base] (n_b_m) {$\eta^{base}$}; 
+  \node[latent,right=.6 of base] (n_b_m) {$\eta^{base}$};
   \node[latent,right=.85 of n_b_m] (n_b_ms) {$\eta^{base}$};
   \node[latent,right=.85 of n_b_ms] (n_b_mab) {$\eta^{base}$};
   \node[latent,right=.85 of n_b_mab] (m_b_mab) {$\mu^{base}$};
   \node[obs,right=.8 of m_b_mab] (C_b_mab) {$C^{base}$};
 
-  \node[latent,right=.6 of align] (n_a_m) {$\eta^{align}$}; 
+  \node[latent,right=.6 of align] (n_a_m) {$\eta^{align}$};
   \node[latent,right=.75 of n_a_m] (n_a_ms) {$\eta^{align}$};
   \node[latent,right=.75 of n_a_ms] (n_a_mab) {$\eta^{align}$};
   \node[latent,right=.75 of n_a_mab] (m_a_mab) {$\mu^{align}$};
   \node[obs,right=.8 of m_a_mab] (C_a_mab) {$C^{align}$};
 
-  
-  \node[const,above=1.02 of n_b_m] (marker) {Category Level};
-  \node[const,above=1.06 of n_b_ms] (group) {\hspace{.75em} Marker Level};
-  \node[const,above=1.02 of n_b_mab] (dyad) {Dyad Level};
+
+  \node[const,above=1.02 of n_b_m] (marker) {Category};
+  \node[const,above=1.06 of n_b_ms] (group) {\hspace{.75em} Marker};
+  \node[const,above=1.02 of n_b_mab] (dyad) {Dyad};
 
   % Factors
-  
+
   \factor[right=of n_b_m] {n_b_m_f} {above:$\mathcal{N}$} {} {};
   \factor[right=of n_b_ms] {n_b_ms_f} {above:$\mathcal{N}$} {} {};
   \factor[right=of n_b_mab] {n_b_mab_f} {above:$\textrm{logit}^{-1}$} {} {};
@@ -61,7 +61,7 @@
   \factor[right=of m_a_mab] {m_a_mab_f} {above:Binom} {} {};
 
   %\factor[right=of C_b_mab] {C_b_mab_f} {above:Binom$} {} {};
-  
+
   %\factor[above=of X]     {X-f}     {Multi} {} {} ; %
   %\factor[above=of T]     {T-f}     {left:Multi} {} {} ; %
   %\factor[above=of theta] {theta-f} {left:Dir} {} {} ; %
@@ -84,7 +84,7 @@
   \factoredge {n_b_ms}  {n_b_ms_f}     {n_b_mab} ; %
   \factoredge {n_b_mab}  {n_b_mab_f}     {m_b_mab} ; %
   \factoredge {m_b_mab,N_b_mab} {m_b_mab_f} {C_b_mab}; %
- 
+
    \edge{align}{n_a_m};
   \factoredge {n_a_m}  {n_a_m_f}     {n_a_ms} ; %
   \factoredge {n_a_ms}  {n_a_ms_f}     {n_a_mab} ; %
@@ -114,7 +114,7 @@
 \end{tikzpicture}
 %\endpgfgraphicnamed
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: tex-pdf
 %%% TeX-master: "example"
-%%% End: 
+%%% End:

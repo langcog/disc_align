@@ -181,11 +181,11 @@ For each marker, WHAM treats each reply treated as a sample of token-by-token in
 
 For a set of message-reply pairs between a speaker-replier dyad $(a,b)$, we first separate the replies into two sets based on whether the preceding message contained the marker $m$ (the ``alignment'' set) or not (the ``baseline'' set). All replies within a set are then aggregated in a single bag-of-words representation, with marker token counts $C^{align}_{m,a,b}$ and $C^{base}_{m,a,b}$, and total token counts $N^{base}_{m,a,b}$ and $N^{base}_{m,a,b}$, the observed variables on the far right of the model.  Moving from right to left, these counts are assumed to come from binomial draws with probability $\mu^{align}_{m,a,b}$ or $\mu^{base}_{m,a,b}$.  The $\mu$ values are generated from $\eta$ values in log-odds space by an inverse-logit transform, similar to linear predictors in logistic regression.
 
-The $\eta^{base}$ variables are representations of the baseline frequency of a marker in log-odds space, and $\mu^{base}$ is simply a conversion of $\eta^{base}$ to probability space, the equivalent of an intercept term in a logistic regression. $\eta^{align}$ is an additive value, with $\mu^{align} = \textrm{logit}^{-1}(\eta^{base}+\eta^{align})$, the equivalent of a binary feature coefficient in a logistic regression.  Alignment is the change in log-odds of the replier using $m$ above their baseline usage of the marker, in response to a message that uses $m$.
+The $\eta^{base}$ variables are representations of the baseline frequency of a marker in log-odds space, and $\mu^{base}$ is simply a conversion of $\eta^{base}$ to probability space, the equivalent of an intercept term in a logistic regression. $\eta^{align}$ is an additive value, with $\mu^{align} = \textrm{logit}^{-1}(\eta^{base}+\eta^{align})$, the equivalent of a binary feature coefficient in a logistic regression.  Alignment is then the change in log-odds of the replier using $m$ above baseline usage, given that the initial message uses $m$.
 
-The remainder of the model is a hierarchy of normal distributions that bring category and social structure into the model, and as in HAM, this can vary depending on the problem the model is applied to.  In the present work, we have three levels in the hierarchy: first, a category level, followed by a marker level\footnote{In the lexical and category-not-word alignment models, these markers are words within a category. The category alignment model does not include this level, since all words in a category are treated identically.}, followed by a marker-dyad level. All of these normal distributions have identical standard deviations $\sigma^2=.25$.\footnote{This value was chosen as a good balance between reasonable parameter convergence (improved by smaller $\sigma^2$) and good model log-probability (improved by larger $\sigma^2$).}  The baseline hierarchy is headed by a $Cauchy(0,2.5)$ distribution, following \cite{GelmanEtAl2008}'s suggestion, as fairly uninformative prior for baseline marker frequency. The alignment hierarchy is headed by a normal distribution centered at 0, biasing the model equally in favor of positive and negative alignments.
+The remainder of the model is a hierarchy of normal distributions that allow social and word category structure to be integrated into the analysis. In the present work, we have three levels in the hierarchy: category level, marker level,\footnote{In the lexical and category-not-word alignment models, these markers are words within a category. The category alignment model does not include this level, since all words in a category are treated identically.} and conversational dyad level. All of these normal distributions have identical standard deviations $\sigma^2=.25$.\footnote{This value was chosen as a good balance between reasonable parameter convergence (improved by smaller $\sigma^2$) and good model log-probability (improved by larger $\sigma^2$).}  A $Cauchy(0,2.5)$ distribution gives a relatively uninformative prior for baseline marker frequency \cite{GelmanEtAl2008}. The alignment hierarchy is headed by a normal distribution centered at 0, biasing the model equally in favor of positive and negative alignments.
 
-The key quantity in our analyses is the inferred category-level variable $\eta^{align}_{S}$, the level of alignment on category $S$ across all dyads.
+% The key quantity for our analyses is the category-level variable $\eta^{align}_{S}$, the level of alignment on category $S$ across all dyads.
 
 %\begin{center}
 %\begin{tabular}{|c|}
@@ -202,10 +202,7 @@ The key quantity in our analyses is the inferred category-level variable $\eta^{
 %\end{tabular}
 %\end{center}
 
-
-\section{Experiments}
-
-We perform two experiments. First, we look at how lexical-level and category-level alignment interact, and find that on Twitter and telephone conversations, lexical alignment dominates categorical alignment.  We then use the telephone conversations to investigate the effect of discourse structure on alignment, focusing on the effect of backchannels.
+For our marker set, we adopt the Linguistic Inquiry and Word Count (LIWC) system to categorize words \cite{LIWC}.  We use a set of 11 categories that have shown alignment effects in previous work \cite{DNMGamonDumais2011}. These can be loosely grouped into a set of five syntactic categories (articles, conjunctions, prepositions, pronouns, and quantifiers) and six conceptual categories (certainty, discrepancy, exclusion, inclusion, negation, and tentative). Categories and example elements are shown in Table \ref{table:liwc}. We manually lemmatized all words in each category.
 
 \begin{table}
 \centering
@@ -228,26 +225,33 @@ Tentative & \textit{maybe, perhaps} & 28 & .033 & .025\\
 \caption{Marker categories for linguistic alignment, with examples, number of distinct word lemmas, and token probability of in a reply in Switchboard and Twitter.}\label{table:liwc}
 \end{table}
 
-\subsection{Data}
-We use two corpora in these experiments. The first is a collection of Twitter conversations collected by \cite{DoyleFrank2015CMCL} to examine information density in conversation. This corpus focuses on conversations within a set of 14 mostly distinct subcommunities on Twitter, and contains 63,673 conversation threads, covering 228,923 total tweets.  We divide these conversations into message pairs, also called conversational turns, which are two consecutive tweets within a conversation thread.  The second tweet is always in reply to the first (according to the Twitter API), although this does not necessarily mean that the content of the reply is a response to the preceding tweet. Retweets (including explicit retweets and some common manual retweet methods) were removed automatically. This processing leaves us with 122,693 message pairs, spanning 2,815 users.  The tweets were parsed into word tokens using the Twokenizer \cite{OwoputiEtAl2013}.
+\section{Data}
 
-The second corpus is the SwDA version of the Switchboard corpus \cite{JurafskyShribergBiasca1997}, as compiled by Chris Potts\footnote{\url{http://compprag.christopherpotts.net/swda.html}} . This is a collection of transcribed telephone conversations with each utterance labeled with the discourse act it is performing (e.g., statement of opinion, signal of non-understanding).  It contains 221,616 total utterances in 1,155 conversations.  We combine consecutive utterances by the same speaker without interruption from the listener into a single message and treat consecutive pairs of messages from different speakers as conversation turns. This results in 110,615 message pairs.
+We use two corpora for our experiments. The first is a collection of Twitter conversations collected by \cite{DoyleFrank2015CMCL} to examine information density in conversation. This corpus focuses on conversations within a set of 14 mostly distinct sub-communities on Twitter, and contains 63,673 conversation threads, covering 228,923 total tweets.  We divide these conversations into message pairs, also called conversational turns, which are two consecutive tweets within a conversation thread.  The second tweet is always in reply to the first (according to the Twitter API), although this does not necessarily mean that the content of the reply is a response to the preceding tweet. Retweets (including explicit retweets and some common manual retweet methods) were removed automatically. This processing leaves us with 122,693 message pairs, spanning 2,815 users.  The tweets were parsed into word tokens using the Twokenizer \cite{OwoputiEtAl2013}.
 
-For both corpora, we use the Linguistic Inquiry and Word Count (LIWC) system to categorize words \cite{LIWC}.  We use a set of 11 categories that have shown alignment effects in previous work \cite{DNMGamonDumais2011}. These can be loosely grouped into a set of five syntactic categories (articles, conjunctions, prepositions, pronouns, and quantifiers) and six conceptual categories (certainty, discrepancy, exclusion, inclusion, negation, and tentative). Categories and example elements are shown in Table \ref{table:liwc}.  The words within these categories were manually lemmatized.
+The second corpus is the SwDA version of the Switchboard corpus \cite{godfrey1992switchboard,jurafsky1997switchboard}.\footnote{Available courtesy of Christopher Potts at \url{http://compprag.christopherpotts.net/swda.html}.} This corpus is a collection of transcribed telephone conversations, with each utterance labeled with the discourse act it is performing (e.g., statement of opinion, signal of non-understanding).  It contains 221,616 total utterances in 1,155 conversations.  We combine consecutive utterances by the same speaker without interruption from the listener into a single message and treat consecutive pairs of messages from different speakers as conversation turns, resulting in 110,615 message pairs.
 
-\subsection{Experiment 1}
+\section{Experiment 1: Lexical- and Category-level Alignment}
+%
+% We perform two experiments. First, we look at how lexical-level and category-level alignment interact, and find that on Twitter and telephone conversations, lexical alignment dominates categorical alignment.  We then use the telephone conversations to investigate the effect of discourse structure on alignment, focusing on the effect of backchannels.
 
-Our first experiment examines how alignment differs across the lexical and categorical levels. We use the WHAM framework to infer alignment on word and category counts, and also introduce a measure to estimate the influence of one word in a category on other words in its category, the ``category-not-word'' alignment.
+% \subsection{Experiment 1}
 
-\subsubsection{Levels of alignment and their interaction}
+Our first experiment examines how alignment differs across the lexical and categorical levels. We use the WHAM framework to infer alignment on word and category counts, and also introduce a measure to estimate the influence of one word in a category on other words in its category, ``category-not-word'' alignment. We include this last type of alignment because it is possible that the category alignment effects in previous work are the result of lexical alignment on the individual words in the category, without any influence across words in the category. If categorical alignment is a real effect over and above lexical alignment, then the presence of a word in a message should not only increase the chance of seeing that word in the reply, but also other words in its category.
 
-We want to examine the interaction of two levels of alignment. The first is lexical-level alignment, looking at how the presence of a word (lemma) in a message increases its likelihood of appearing in the reply.  The second is category-level alignment, looking at how the presence of a member of a word category in a message increases the likelihood of words from that category appearing in the reply.  These categories generally correspond to syntactic classes (pronouns, conjunctions) or broad conceptual classes (inclusive words, negative emotions)   Work on by-word conditional alignment has tended to focus on the lexical level, while distributional and by-message conditional alignment work has focused on the categorical level.
+
+% Furthermore, we are interested in explicitly tracking the influence of lexical alignment on categorical alignment.
+
+% \subsubsection{Levels of alignment and their interaction}
+
+% We want to examine the interaction of two levels of alignment. The first is lexical-level alignment, looking at how the presence of a word (lemma) in a message increases its likelihood of appearing in the reply.  The second is category-level alignment, looking at how the presence of a member of a word category in a message increases the likelihood of words from that category appearing in the reply.  These categories generally correspond to syntactic classes (pronouns, conjunctions) or broad conceptual classes (inclusive words, negative emotions)   Work on by-word conditional alignment has tended to focus on the lexical level, while distributional and by-message conditional alignment work has focused on the categorical level.
 
 %Some recent work has explored interactions between these levels. \cite{HealeyPurverHowes2014} treat lexical alignment as the baseline and find that turn-by-turn syntactic alignment is actually slightly lower than lexical alignment would predict. On the other hand, \cite{XuReitter2015} argue for LLA as a good alignment measure in part because of its high correlation between lexical and syntactic alignment, under the assumption that alignment at all levels is a communicative goal \cite{PickeringGarrod2004}. A major goal of this experiment is thus to investigate whether lexical- and categorical-level alignment point in the same direction.
 
-Furthermore, we are interested in explicitly tracking the influence of lexical alignment on categorical alignment.  It is possible that the category alignment effects in previous work are the result of lexical alignment on the individual words in the category, without any influence across words in the category. If categorical alignment is a real effect over and above lexical alignment, then the presence of a word in a message should not only increase the chance of seeing that word in the reply, but also other words in its category.
 
 %Intuitively, category alignment must be no less than the mean lexical alignment of words in the category, since each instance of lexical agreement is also an instance of category agreement.\footnote{More precisely, the weighted mean given lexical frequency.}
+
+\subsection{Measuring category-not-word-alignment}
 
 \begin{table}[t]
 \begin{center}
@@ -265,9 +269,16 @@ $\emptyset$ & 25 & 25 & 25\\
 \caption{\label{table:cnw-example1} A theoretical case where lexical alignment surpasses categorical alignment due to negative CNW between the words.}
 \end{table}
 
-However, assessing the amount of alignment triggered across words in a category (which we call ``category-not-word alignment'') is not trivial, as there are a variety of interactions between lexical items within a category that can cause the lexical alignment to actually be less than the category alignment. Table \ref{table:cnw-example1} illustrates this with a theoretical distribution over the pronouns \textit{he} and \textit{she}; one use of the pronoun \textit{he} makes another use more likely (\textit{Did he like the movie? Yeah, he loved it.}) while also reducing the likelihood of \textit{he}, since the topic of conversation is now a male, and vice versa for \textit{she}. For both \textit{he} and \textit{she}, the lexical alignment is approximately $logit^{-1}(p(B|A)-p(B|\neg A)) = logit^{-1}(\frac{50}{80}-\frac{25}{75}) \approx 1.2$, but categorical alignment is approximately $logit^{-1}(\frac{120}{160}-\frac{50}{75}) \approx 0.4$.
+Assessing the amount of alignment triggered across words in a category (which we call ``category-not-word alignment'') is not trivial, as there are a variety of interactions between lexical items within a category that can cause the lexical alignment to actually be less than the category alignment. Table \ref{table:cnw-example1} illustrates this with a theoretical distribution over the pronouns \textit{he} and \textit{she}; one use of the pronoun \textit{he} makes another use more likely (\textit{Did he like the movie? Yeah, he loved it.}) while also reducing the likelihood of \textit{he}, since the topic of conversation is now a male, and vice versa for \textit{she}. For both \textit{he} and \textit{she}, the lexical alignment is approximately $logit^{-1}(p(B|A)-p(B|\neg A)) = logit^{-1}(\frac{50}{80}-\frac{25}{75}) \approx 1.2$,
+but categorical alignment is approximately $logit^{-1}(\frac{120}{160}-\frac{50}{75}) \approx 0.4$.
 
-\begin{table}[h]
+
+% Lexical alignment can differ from categorical alignment for a variety of reasons, so we consider three quantities: the lexical and categorical alignments, but also the ``category-not-word'' (CNW) alignment: the increased likelihood of seeing another member of the category other than the target word.
+
+% \subsection{Category-not-word Alignment}
+
+
+\begin{table}[t]
 \begin{center}
 \begin{tabular}{|c||c|c|c|}
 \hline
@@ -280,12 +291,9 @@ $\emptyset$ & 25 & 25 & 25\\
 \hline
 \end{tabular}
 \end{center}
-\caption{\label{table:cnw-example2} A theoretical case where lexical alignment is below categorical alignment due to greater CNW alignment between the words than lexical alignment.}
+\caption{A theoretical case where lexical alignment is below categorical alignment due to greater CNW alignment between the words than lexical alignment.}
 \end{table}
 
-Lexical alignment can differ from categorical alignment for a variety of reasons, so we consider three quantities: the lexical and categorical alignments, but also the ``category-not-word'' (CNW) alignment: the increased likelihood of seeing another member of the category other than the target word.
-
-\subsection{Category-not-word Alignment}
 
 To investigate CNW alignment, we look at a subset of the data: for each word $w$, exclude all messages that contain a word from that category that is not $w$. This limits the category alignment influence on the reply to the single word $w$. Then, instead of looking at how often $w$ appears in the reply, we look at how often all other words in the category $S$ appear in the reply.  The model then infers the influence of $w$ on the other words in the category independent of their lexical alignment.
 
@@ -296,7 +304,7 @@ We implemented WHAM in RStan \cite{Stan}, with code available at \url{http://git
 
 We find that there are substantial differences across contexts in the overall rate of alignment between the corpora (mean category alignment on Twitter was $.19$, while its mean on Switchboard was $-.051$). This may reflect the nature of the two discourses. Replies on Twitter are composed while looking at the preceding message, encouraging the replier to take more account of the other tweeter's words, and a replier can draft and edit their reply to make it better fit the conversation.  Messages on Switchboard, on the other hand, are evanescent, so a replier must compose a reply without looking back at the message, without editing, and in real-time.  %In Experiment 2, we will show that differences in discourse structure may also impact the differences in alignment.
 
-Despite the difference in reply construction in the two corpora, they share a critical relationship: alignment exists primarily at the lexical rather than category level.  The lexical and category alignment are not significantly different from each other, but the strength of lexical alignment is significantly larger than the CNW alignment, according to a $t$-test over all categories (Twitter: $t(10)=.21, p<.001$; Swbd: $t(10)=.12,p=.003$). CNW alignment is significantly negative on Switchboard ($t(10)=-.11, p=.01$) and not significantly different from zero on Twitter ($t(10)=.009, p=.79$). In total, this means that a word from the preceding message is more likely to appear in the reply, but other words in that category are no more likely to appear, suggesting that existing categorical alignment results may be primarily lexical results.  
+Despite the difference in reply construction in the two corpora, they share a critical relationship: alignment exists primarily at the lexical rather than category level.  The lexical and category alignment are not significantly different from each other, but the strength of lexical alignment is significantly larger than the CNW alignment, according to a $t$-test over all categories (Twitter: $t(10)=.21, p<.001$; Swbd: $t(10)=.12,p=.003$). CNW alignment is significantly negative on Switchboard ($t(10)=-.11, p=.01$) and not significantly different from zero on Twitter ($t(10)=.009, p=.79$). In total, this means that a word from the preceding message is more likely to appear in the reply, but other words in that category are no more likely to appear, suggesting that existing categorical alignment results may be primarily lexical results.
 
 %The two corpora also differ in the correlations between the alignment measures. The Switchboard corpus, despite its overall tendency against category alignment, has significant positive correlations between category and lexical ($r = .71, p=.015$), and category and CNW alignment ($r = .94, p <.001$), as well as marginal positive alignment between lexical and CNW alignment ($r = .52, p = .10$).  This suggests a consistency across words within a category on Switchboard
 
@@ -340,9 +348,9 @@ In this experiment, we use the discourse-annotated Switchboard corpus to compare
 \end{figure}
 
 \subsubsection{Results}
-Alignment values for the Switchboard corpus without backchannels are shown in Figure \ref{fig:swbdn-res}. As expected, alignment is on average higher without the backchannels ($p=.09$ for category, $p<.05$ for lexical and CNW), reflecting the constrained nature of backchannels. Lexical alignment is significantly higher than category alignment ($t(10)=-.08, p=.03$), consistent with Experiment 1's findings of the primacy of lexical alignment. 
+Alignment values for the Switchboard corpus without backchannels are shown in Figure \ref{fig:swbdn-res}. As expected, alignment is on average higher without the backchannels ($p=.09$ for category, $p<.05$ for lexical and CNW), reflecting the constrained nature of backchannels. Lexical alignment is significantly higher than category alignment ($t(10)=-.08, p=.03$), consistent with Experiment 1's findings of the primacy of lexical alignment.
 
-Interestingly, we find two categories, certainty and negation, that show greater alignment when backchannels are present. 
+Interestingly, we find two categories, certainty and negation, that show greater alignment when backchannels are present.
 
 \section{Discussion and Conclusion}
 [What is the meaning of a category? The fact that category alignments can be estimated with small HPDs suggests that words in a category really do have similar alignment behavior (i.e., the categories are real). However, the reality of categories does not mean that the words in the category align with each other, only that they individually align similarly.]

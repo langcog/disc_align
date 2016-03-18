@@ -1,0 +1,372 @@
+%
+% File acl2016.tex
+%
+%% Based on the style files for ACL-2015, with some improvements
+%%  taken from the NAACL-2016 style
+%% Based on the style files for ACL-2014, which were, in turn,
+%% Based on the style files for ACL-2013, which were, in turn,
+%% Based on the style files for ACL-2012, which were, in turn,
+%% based on the style files for ACL-2011, which were, in turn,
+%% based on the style files for ACL-2010, which were, in turn,
+%% based on the style files for ACL-IJCNLP-2009, which were, in turn,
+%% based on the style files for EACL-2009 and IJCNLP-2008...
+
+%% Based on the style files for EACL 2006 by
+%%e.agirre@ehu.es or Sergi.Balari@uab.es
+%% and that of ACL 08 by Joakim Nivre and Noah Smith
+
+\documentclass[11pt]{article}
+\usepackage{acl2016}
+\usepackage{times}
+\usepackage{url}
+\usepackage{latexsym}
+\usepackage{breqn}
+
+\usepackage{tikz}
+\usetikzlibrary{bayesnet}
+
+%\aclfinalcopy % Uncomment this line for the final submission
+%\def\aclpaperid{***} %  Enter the acl Paper ID here
+
+%\setlength\titlebox{5cm}
+% You can expand the titlebox if you need extra space
+% to show all the authors. Please do not make the titlebox
+% smaller than 5cm (the original size); we will check this
+% in the camera-ready version and ask you to change it back.
+
+\newcommand\BibTeX{B{\sc ib}\TeX}
+
+\title{Investigating the Components of Linguistic Alignment}
+% \title{Investigating the Components of Linguistic Accommodation}
+
+\author{First Author \\
+  Affiliation / Address line 1 \\
+  Affiliation / Address line 2 \\
+  Affiliation / Address line 3 \\
+  {\tt email@domain} \\\And
+  Second Author \\
+  Affiliation / Address line 1 \\
+  Affiliation / Address line 2 \\
+  Affiliation / Address line 3 \\
+  {\tt email@domain} \\}
+
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+In conversation, speakers tend to ``accommodate'' or ``align'' to their partners, changing the style and substance of their communications to be more similar to their partners. We focus here on ``linguistic alignment,'' changes in word choice based on others' choices. Although linguistic alignment is observed across many different contexts and its degree correlates with important social factors such as power and likability, its origins are still uncertain.
+% In particular, does it results from priming of individual lexical items, priming of more complex syntactic or conceptual categories, or higher-level discourse and communicative processes. BUilding on
+% . While many computational measures have been developed for assessing alignment, most are not suitable for
+% they have not delved into the different components of linguistic alignment.
+We build on a recent probabilistic model of alignment, using it to separate out the influence of words and word categories. We then compare alignment across contexts (telephone conversations vs. microblog replies). Our results suggest that alignment is consistently higher for categories with specific discourse functions. Furthermore, we find that different discourse acts also show different degrees of alignment. Rather than stemming from non-communicative priming processes, alignment arises from and interacts with the ongoing discourse.
+\end{abstract}
+
+
+\section{Introduction}
+
+In conversation, people tend to adapt to one another across a broad range of behaviors. This adaptation behavior is collectively known as ``communication accommodation'' \cite{GilesCouplandCoupland1991}. Linguistic alignment, the use of similar words to a conversational partner, is one prominent form of accommodation. Alignment is found robustly across many settings, including in-person, computer-mediated, and web-based conversation \cite{DNMEtAl2012,GilesSchererTaylor1979,NiederhofferPennebaker2002}. In addition, the strength of alignment to conversational partners varies with important sociological factors, such as the power of the partners, their social network centrality, and their likability. Linguistic alignment might even be used to infer these factors in situations where they are unobserved.
+
+Although linguistic alignment appears to reflect important social dynamics, the mechanisms underlying alignment are still not well-understood. We focus here on whether alignment is supported by lower-level, relatively automatic priming mechanisms, or higher-level, strategic discourse processes. Arguing for a priming-based mechanism, the Interactive Alignment Model proposes that conversational partners prime each other, causing alignment via the primed reuse of structures ranging from individual lexical items to syntactic abstractions  \cite{PickeringGarrod2004}. In contrast, Accommodation Theory emphasizes the relatively more communicative and strategic nature of alignment \cite{GilesCouplandCoupland1991}.
+
+Although they are not quantitative theories, these accounts nevertheless make a number of testable predictions. First, if alignment is driven by priming, effects should be relatively constant across different words and word categories. In contrast, communicative accounts should predict that alignment could differ, perhaps being more focused on words, categories, and structures that serve particular conversational or discourse functions. Second, if alignment is driven by priming, it should be relatively consistent across different aspects of a discourse. In contrast, from a strategic or communicative perspective, alignment -- in which preceding words and concepts are reused -- must be balanced against a need to move the conversation forward by introducing new words and concepts. Thus, on a communicative account, alignment should be modulated by the speaker's discourse act, reflecting whether the balance of the concern is convergence on a current focus or the conveyal of new information.
+
+Our goal in the current work is to test these predictions. We make use of a recent probabilistic model of linguistic alignment, modifying it to operate robustly over corpora with highly varying distributional structures and to consider both lexical and category-based alignment. We use two corpora of spontaneous conversations, the Switchboard Corpus and a corpus of Twitter conversations, to perform two experiments. First, in both datasets we measure alignment across different levels of representation and across different categories. Alignment is consistently higher for words and categories with particular discourse functions, but it varies substantially by representation level.  Second, we make use of discourse annotations in Switchboard to measure alignment across different discourse acts, finding that alignment is highly dependent on what discourse actions are being undertaken. Taken together, while these findings reaffirm a large lexical component for alignment, they also suggest the operation of discourse-level, strategic processes.
+
+
+% While substantial work has suggested that linguistic alignment is important, there are a number of open questions about the nature of this alignment. One is the issue of different components of linguistic accommodation.
+
+%
+%
+
+% Interactive Alignment Model's expectation that different types of alignment should be approximately uniform to arguments that, for instance, lexical and syntactic alignment may push in different directions (Healey et al).  We propose a method that uses the same framework to look at three different levels of alignment: word, category, and category-not-word alignments, defined in Section \ref{sect:alignment-levels}.
+
+
+% We propose that linguistic alignment is modulated by the discourse act being performed, with certain acts showing greater or lesser alignment depending on their purpose within the conversation.  In particular, we examine the influence of back-channels, short utterances communicating agreement, understanding, or misunderstanding on alignment.
+
+
+\section{Previous Work}
+
+\subsection{Why does alignment matter?}
+
+Linguistic alignment, like other kinds of accommodation, can be a critical part of achieving social goals.  Performance in cooperative decision-making tasks is  positively related to the participants' linguistic convergence \cite{FusaroliEtAl2012,KacewiczEtAl2013}.  Romantically, match-making in speed dating and stability in established relationships have both been linked to increased alignment \cite{IrelandEtAl2011}. Alignment can also improve perceived persuasiveness, encouraging listeners to follow good health practices \cite{KlineCeropski1984} or to leave larger tips \cite{vanBaarenEtAl2003}.
+
+Alignment is also important as an indicator of implicit sociological variables. Less powerful conversants generally accommodate to more to powerful conversants. Prominent examples include interviews and jury trials \cite{WillemynsEtAl1997,Gnisci2005,DNMEtAl2012}.  A similar effect is found for network structure: speakers align more to more network-central speakers \cite{NobleFernandez2015}.  Additionally, factors such as gender, likability, respect, and attraction all interact with the magnitude of accommodation \cite{BilousKrauss1988,Natale1975}. Such differences in accommodation can also be indicative of changes to the power dynamic: In U.S. Supreme Court transcripts, \cite{guo2015} showed that depending on the accommodation dimension, justices -- who are more powerful by any intuitive assessment -- may nevertheless accommodate more to lawyers, perhaps because the lawyers have the local power to answer justices' questions.
+
+\subsection{What's the nature of alignment?}
+
+While linguistic alignment has been studied in multiple ways, the most prominent strand has focused on the level of word categories, looking at how interlocutors change their frequency of using, for instance, pronouns or quantitative words  \cite{DNMEtAl2012,IrelandEtAl2011}. This line of work has not directly investigated whether alignments go beyond the level of individual lexical items and extend to syntactic structures. When studies have attempted to test for syntactic alignment, results have been equivocal. While some have found support for syntactic priming \cite{gries2005syntactic,dubey2005parallelism}, others have found negative or null alignment \cite{HealeyPurverHowes2014,reitter2010priming}.
+
+In addition, as noted before, the psychological mechanism or mechanisms that lead to alignment is still uncertain. The Interactive Alignment Model \cite{PickeringGarrod2004} makes the theoretical claim that alignment should be similar across all structural levels as conversants increasingly share their representation. However, \cite{HealeyPurverHowes2014} find across two corpora that speakers syntactically \emph{diverge} from their interlocutors once lexical alignment is accounted for.
+
+
+
+
+
+
+% The preceding results show that linguistic alignment is a robust phenomenon, but the specific nature of this alignment is something of a black box. One major question is how different structural levels of language align.
+
+Furthermore, positive alignment is treated as an inherently good thing, but there is clearly a limit to its goodness, as alignment is inherently backward-looking, while the general goal of a conversation is to exchange information that is not already known by both parties, and inherently forward-looking goal. There are suggestive results that alignment based on function words, which can stay constant even as the topic changes, is more appropriate than alignment based on all words for predicting performance in a decision-making task \cite{FusaroliEtAl2012}. In addition, some recent work finding positive accommodation has limited itself to ``non-topical'' word categories \cite{DNMGamonDumais2011,DoyleYurovskyFrank2016}.
+
+In sum, because most work on alignment has been done either on categories of words or aggregating across the lexicon, we do not have a good sense of whether there are systematic differences between alignment at different levels. Hence,  the evidence is equivocal on the precise nature and scope of alignment behaviors.
+
+% But alignment has been documented at many levels, including the level of individual words \cite{?}, of syntactic structure \cite{HealeyPurverHowes2014}, and message lengths \cite{?}.
+
+
+\section{Measures of alignment}
+
+A further complication is that there is no one standard measure of alignment. The metrics used in previous work fall into two basic categories: distributional and conditional. Distributional methods such as Linguistic Style Matching (LSM) \cite{NiederhofferPennebaker2002,IrelandEtAl2011} or the Zelig Quotient \cite{JonesEtAl2014} calculate the similarity between the conversation participants over their frequencies of word or word category use. In contrast, conditional metrics, such as Local Linguistic Alignment (LLA) \cite{FusaroliEtAl2012,WangReitterYen2014} and the metric used by \cite{DNMGamonDumais2011}, look at how a message conditions its reply, with convergence indicated by elevated word use in the reply when that word was in the preceding message.
+
+While distributional methods have been popular, a major weakness of such methods is that they do not necessarily show true alignment, only similarity. A high level of distributional similarity does not imply that two conversational partners have aligned to one another, because they might instead have been similar to begin with. In contrast, conditional measures allow for stronger inferences about the temporal sequence of alignment (even though they cannot guarantee any causal interpretation). The work reported here extends a recent conditional metric, the Hierarchical Alignment Model, or HAM \cite{DoyleYurovskyFrank2016}.
+
+%\paragraph{Distributional methods} [LSM overview]
+
+\paragraph{By-message conditional methods} Existing conditional methods have typically taken a binary view of utterances \cite{DNMEtAl2012,DoyleYurovskyFrank2016}. Consider the following example of conditional alignment on pronouns. Bob aligns to Alice if his replies are more likely to contain a pronoun when in response to a message from Alice that contains a pronoun. An example of positive conditional alignment is shown below:
+
+\begin{center}
+\begin{tabular}{|c||c|c|}
+\hline
+& \multicolumn{2}{|c|}{Bob's reply} \\
+\hline
+Alice's message & has pronoun & no pronoun \\ \hline
+has pronoun & 8 & 2\\
+no pronoun & 5 & 5\\
+\hline
+\end{tabular}
+\end{center}
+
+Here, Alice sends 10 messages that contain at least one pronoun, and 8 of Bob's replies contain at least one pronoun.  But Alice also sends 10 messages that don't contain any pronouns, and only 5 of Bob's replies to these contain pronouns. This increased likelihood of a pronoun-containing reply to a pronoun-containing message is the conditional alignment.
+
+Different models quantify this conditional alignment slightly differently.  \cite{DNMGamonDumais2011} proposed a subtractive conditional probability model, where alignment is the difference between the likelihood of a pronoun-containing reply to a pronoun-containing message and the probability of a pronoun-containing reply to any message:
+
+\begin{equation}
+align_{SCP} = p(B|A) - p(B)
+\end{equation}
+
+Doyle, Yurovsky, and Frank \shortcite{DoyleYurovskyFrank2016} showed that this measure can be affected by the overall frequency of the category being aligned on, though. To correct this issue, they proposed a Hierarchical Alignment Model (HAM), which defines alignment as a linear effect on the log-odds of a reply containing the relevant marker (e.g., a pronoun), similar to a linear predictor in a logistic regression.\footnote{Because the HAM estimated this quantity via Bayesian inference, the inferred alignment value depends on the prior and number of messages observed, so unlike the other measures, this equality is only approximate.}
+
+\begin{dmath}
+align_{HAM} \approx logit^{-1}(p(B|A)) - \\ \hspace*{1em} logit^{-1}(p(B|\neg A))
+\end{dmath}
+
+Both of these binarized conditional methods, though, depend on the assumption that all messages have similar, and small, numbers of words. The probability that a message contains at least one of any marker of interest is of course dependent on the message's length, so if messages vary substantially in their length, these alignment values can be at least noisy, if not biased. They are also not robust as messages increase in length, since the likelihood that a message contains any marker approaches 1 as message length increases.
+
+\paragraph{By-word conditional methods} A solution to this problem is simply to shift from binarized data to count data. Instead of modeling whether or not a reply contains a marker of interest, we can model that marker's frequency within replies to messages that do or do not contain the marker.  Some existing measures use the proportion of the preceding message that appears in its reply to estimate alignment, notably Local Linguistic Alignment (LLA) \cite{FusaroliEtAl2012,WangReitterYen2014} and the lexical similarity (LS) measure of \cite{HealeyPurverHowes2014}. LLA is defined as the number of word tokens ($w_i$) that appear in both the message ($M_a$) and the reply ($M_b$), divided by the product of the total number of word tokens in the message and reply:
+
+\begin{equation}
+align_{LLA} = \frac{\sum_{w_i \in M_b} \delta(w_i \in M_a)}{length(M_a)length(M_b)}
+\end{equation}
+
+These measures have an aspect of conditionality, as they only count words that appear in both the message and the reply, but they fail to control for the baseline frequency of the initial marker, and hence may be biased in measurements across words or categories of different frequencies \cite{DoyleYurovskyFrank2016}. They also have inherent length dependence, as the maximum alignment estimate is only possible when the reply is shorter than the message.\footnote{Proof in Supplemental?}
+
+We need, therefore, an alignment measure that has the benefits of the existing by-message conditional models (HAM outperformed SCP, LLA, and LSM in simulations in \cite{DoyleYurovskyFrank2016}) while gaining the length-robustness of a by-word conditional method.  A simple change to the HAM framework satisfies this goal.
+
+\section{The Word-Based Hierarchical Alignment Model (WHAM)}
+
+The HAM framework conceptualizes alignment as the increase in the likelihood that a reply will contain a ``marker''---a word or word category---given that the preceding message contained it, compared to when the preceding message did not contain it. This introduces a substantial simplification: it treats each message as a binary variable, either containing or not containing the word of interest. By-message alignment has successfully found alignment effects in previous work \cite{DNMGamonDumais2011}, and may be appropriate for data such as the Twitter dataset used in that paper. However, in looking at more natural dialogues, such as telephone conversations, length may vary substantially between messages, obscuring the alignment effect.
+
+We propose the Word-Based Hierarchical Alignment Model (WHAM) to address this. Like HAM, the WHAM framework assumes that word use in replies is shaped by whether the preceding message contained the marker of interest. But the WHAM framework looks at the marker token frequencies within the replies, so that a 40-word reply with two instances of the marker is represented differently from a 3-word reply containing with one instance.
+
+For each marker, WHAM treats each reply treated as a sample of token-by-token independent draws from a binomial distribution. The binomial probability is dependent on whether the preceding message did ($\mu^{align}$) or did not ($\mu^{base}$) contain the marker, and the inferred alignment value is the difference between these probabilities in log-odds space ($\eta^{align}$). 
+
+\begin{figure*}[t]
+  \begin{center}
+    \input{graphics/model_wham}
+  \end{center}
+  \caption{The Word-Based Hierarchical Alignment Model (WHAM). A chain of normal distributions generates a linear predictor $\eta$, which is converted into a probability $\mu$ for binomial draws of the words in each reply.}\label{fig:wham}
+\end{figure*}
+
+WHAM's graphical model is shown in Figure \ref{fig:wham}. For a set of message-reply pairs between a speaker-replier dyad $(a,b)$, we first separate the replies into two sets based on whether the preceding message contained the marker $m$ (the ``alignment'' set) or not (the ``baseline'' set). All replies within a set are then aggregated in a single bag-of-words representation, with marker token counts $C^{align}_{m,a,b}$ and $C^{base}_{m,a,b}$, and total token counts $N^{base}_{m,a,b}$ and $N^{base}_{m,a,b}$, the observed variables on the far right of the model.  Moving from right to left, these counts are assumed to come from binomial draws with probability $\mu^{align}_{m,a,b}$ or $\mu^{base}_{m,a,b}$.  The $\mu$ values are generated from $\eta$ values in log-odds space by an inverse-logit transform, similar to linear predictors in logistic regression.
+
+The $\eta^{base}$ variables are representations of the baseline frequency of a marker in log-odds space, and $\mu^{base}$ is simply a conversion of $\eta^{base}$ to probability space, the equivalent of an intercept term in a logistic regression. $\eta^{align}$ is an additive value, with $\mu^{align} = \textrm{logit}^{-1}(\eta^{base}+\eta^{align})$, the equivalent of a binary feature coefficient in a logistic regression.  Alignment is the change in log-odds of the replier using $m$ above their baseline usage of the marker, in response to a message that uses $m$.
+
+The remainder of the model is a hierarchy of normal distributions that bring category and social structure into the model, and as in HAM, this can vary depending on the problem the model is applied to.  In the present work, we have three levels in the hierarchy: first, a category level, followed by a marker level\footnote{In the lexical and category-not-word alignment models, these markers are words within a category. The category alignment model does not include this level, since all words in a category are treated identically.}, followed by a marker-dyad level. All of these normal distributions have identical standard deviations $\sigma^2=.25$.\footnote{This value was chosen as a good balance between reasonable parameter convergence (improved by smaller $\sigma^2$) and good model log-probability (improved by larger $\sigma^2$).}  The baseline hierarchy is headed by a $Cauchy(0,2.5)$ distribution, following \cite{GelmanEtAl2008}'s suggestion, as fairly uninformative prior for baseline marker frequency. The alignment hierarchy is headed by a normal distribution centered at 0, biasing the model equally in favor of positive and negative alignments.
+
+%\begin{center}
+%\begin{tabular}{|c|}
+%\hline
+%Generative Model \\
+%\hline
+%Alice says $x$, Bob wants to reply. \\
+%If $m \not\in x$, then $p(B_m|A_m) = \mu^{base}(m)$ \\
+%If $m \in x$, then $p(B_m|\neg A_m) = \mu^{align}(m)$ \\
+%\hline
+%$\mu^{base}(m) = logit^{-1}(\eta^{base}(m))$ \\
+%$\mu^{align}(m) = logit^{-1}(\eta^{base}(m)+\eta^{align}(m))$ \\
+%\hline
+%\end{tabular}
+%\end{center}
+
+
+\section{Experiments}
+
+Using the WHAM framework, we investigate the variation in alignment across different conversation contexts and across different discourse acts.
+
+\begin{table}
+\centering
+\small
+\begin{tabular}{|c|c|c|c|c|} \hline
+& & & Swbd & Twit \\
+Category & Examples & Size & Prob & Prob\\ \hline
+Article & \textit{a, an, the} & 2 & .053 & .047\\
+Certainty  & \textit{always, never} & 17 & .014 & .015\\
+Conjunction  & \textit{but, and, though} & 18 & .077 & .051\\
+Discrepancy  & \textit{should, would} & 21 & .015 & .019\\
+Exclusive  & \textit{without, exclude} & 77 & .038 & .028\\
+Inclusive  & \textit{with, include} & 57 & .057 & .028\\
+Negation  & \textit{not, never} & 12 & .020 & .023\\
+Preposition  & \textit{to, in, by, from} & 97 & .097 & .091\\
+Pronoun   & \textit{it, you} & 55 & .17 & .16\\
+Quantifier  & \textit{few, many} & 23 & .028 & .025\\
+Tentative & \textit{maybe, perhaps} & 28 & .033 & .025\\
+\hline\end{tabular}
+\caption{Marker categories for linguistic alignment, with examples, number of distinct word lemmas, and token probability of in a reply in Switchboard and Twitter.}\label{tab:LIWC}
+\end{table}
+
+\subsection{Data}
+We use two corpora in these experiments. The first is a collection of Twitter conversations collected by \cite{DoyleFrank2015CMCL} to examine information density in conversation. This corpus focuses on conversations within a set of 14 mostly distinct subcommunities on Twitter, and contains 63,673 conversation threads, covering 228,923 total tweets.  We divide these conversations into message pairs, also called conversational turns, which are two consecutive tweets within a conversation thread.  The second tweet is always in reply to the first (according to the Twitter API), although this does not necessarily mean that the content of the reply is a response to the preceding tweet. Retweets (including explicit retweets and some common manual retweet methods) were removed automatically. This processing leaves us with 122,693 message pairs, spanning 2,815 users.  The tweets were parsed into word tokens using the Twokenizer \cite{OwoputiEtAl2013}.
+
+The second corpus is the SwDA version of the Switchboard corpus \cite{JurafskyShribergBiasca1997}, as compiled by Chris Potts\footnote{\url{http://compprag.christopherpotts.net/swda.html}} . This is a collection of transcribed telephone conversations with each utterance labeled with the discourse act it is performing (e.g., statement of opinion, signal of non-understanding).  It contains 221,616 total utterances in 1,155 conversations.  We combine consecutive utterances by the same speaker without interruption from the listener into a single message and treat consecutive pairs of messages from different speakers as conversation turns. [XXX nnumber of conversatiuonal turns]
+
+For both corpora, we use the Linguistic Inquiry and Word Count (LIWC) system to categorize words \cite{LIWC}.  We use a set of 11 categories that have shown alignment effects in previous work \cite{DNMGamonDumais2011}. These can be loosely grouped into a set of five syntactic categories (articles, conjunctions, prepositions, pronouns, and quantifiers) and six conceptual categories (certainty, discrepancy, exclusion, inclusion, negation, and tentative). Categories and example elements are shown in Table \ref{table:liwc}.  The words within these categories were manually lemmatized.
+
+\subsection{Experiment 1}
+
+Our first experiment examines how alignment differs across the lexical and categorical levels.
+
+\subsubsection{Levels of alignment and their interaction}
+
+We want to examine the interaction of two levels of alignment. The first is lexical-level alignment, looking at how the presence of a word (lemma) in a message increases its likelihood of appearing in the reply.  The second is category-level alignment, looking at how the presence of a member of a word category in a message increases the likelihood of words from that category appearing in the reply.  These categories generally correspond to syntactic classes (pronouns, conjunctions) or broad conceptual classes (inclusive words, negative emotions)   Work on by-word conditional alignment has tended to focus on the lexical level, while distributional and by-message conditional alignment work has focused on the categorical level.
+
+%Some recent work has explored interactions between these levels. \cite{HealeyPurverHowes2014} treat lexical alignment as the baseline and find that turn-by-turn syntactic alignment is actually slightly lower than lexical alignment would predict. On the other hand, \cite{XuReitter2015} argue for LLA as a good alignment measure in part because of its high correlation between lexical and syntactic alignment, under the assumption that alignment at all levels is a communicative goal \cite{PickeringGarrod2004}. A major goal of this experiment is thus to investigate whether lexical- and categorical-level alignment point in the same direction.
+
+Furthermore, we are interested in explicitly tracking the influence of lexical alignment on categorical alignment.  It is possible that the category alignment effects in previous work are the result of lexical alignment on the individual words in the category, without any influence across words in the category. If categorical alignment is a real effect over and above lexical alignment, then the presence of a word in a message should not only increase the chance of seeing that word in the reply, but also other words in its category.
+
+%Intuitively, category alignment must be no less than the mean lexical alignment of words in the category, since each instance of lexical agreement is also an instance of category agreement.\footnote{More precisely, the weighted mean given lexical frequency.} 
+
+\begin{table}[t]
+\begin{center}
+\begin{tabular}{|c||c|c|c|}
+\hline 
+& \multicolumn{3}{|c|}{\bf Reply} \\ 
+\hline
+\bf Message & $\emptyset$ & \textit{he} & \textit{she} \\ \hline
+$\emptyset$ & 25 & 25 & 25\\
+\textit{he} & 20 & 50 & 10 \\
+\textit{she} & 20 & 10 & 50 \\
+\hline
+\end{tabular}
+\end{center}
+\caption{\label{table:cnw-example1} A theoretical case where lexical alignment surpasses categorical alignment due to negative CNW between the words.}
+\end{table}
+
+However, assessing the amount of alignment triggered across words in a category (which we call ``category-not-word alignment'') is not trivial, as there are a variety of interactions between lexical items within a category that can cause the lexical alignment to actually be less than the category alignment. Table \ref{table:cnw-example1} illustrates this with a theoretical distribution over the pronouns \textit{he} and \textit{she}; one use of the pronoun \textit{he} makes another use more likely (\textit{Did he like the movie? Yeah, he loved it.}) while also reducing the likelihood of \textit{he}, since the topic of conversation is now a male, and vice versa for \textit{she}. For both \textit{he} and \textit{she}, the lexical alignment is approximately $logit^{-1}(p(B|A)-p(B|\neg A)) = logit^{-1}(\frac{50}{80}-\frac{25}{75}) \approx 1.2$, but categorical alignment is approximately $logit^{-1}(\frac{120}{160}-\frac{50}{75}) \approx 0.4$. 
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c||c|c|c|}
+\hline 
+& \multicolumn{3}{|c|}{\bf Reply} \\ 
+\hline
+\bf Message & $\emptyset$ & \textit{you} & \textit{I} \\ \hline
+$\emptyset$ & 25 & 25 & 25\\
+\textit{you} & 20 & 10 & 50 \\
+\textit{I} & 20 & 50 & 10 \\
+\hline
+\end{tabular}
+\end{center}
+\caption{\label{table:cnw-example2} A theoretical case where lexical alignment is below categorical alignment due to greater CNW alignment between the words than lexical alignment.}
+\end{table}
+
+Lexical alignment can differ from categorical alignment for a variety of reasons, so we consider three quantities: the lexical and categorical alignments, but also the ``category-not-word'' (CNW) alignment: the increased likelihood of seeing another member of the category other than the target word.
+
+\subsection{Category-not-word Alignment}
+
+To investigate CNW alignment, we look at a subset of the data: for each word $w$, exclude all messages that contain a word from that category that is not $w$. This limits the category alignment influence on the reply to the single word $w$. Then, instead of looking at how often $w$ appears in the reply, we look at how often all other words in the category $S$ appear in the reply.  The model then infers the influence of $w$ on the other words in the category independent of their lexical alignment.
+
+This is implemented within the WHAM framework by changing the count variables $C^\cdot$ and $N^\cdot$. $C^{align}$ is the number of tokens of $\{S-w\}$ in replies to messages containing $w$ but not $\{S - w\}$. $C^{base}$ is the number in replies to messages not containing any words in $S$.  Similarly, $N^{align}$ is the total token counts over replies containing $w$ but not any other words in $S$, and $N^{base}$ the total token counts over replies containing no words in $S$.
+
+The key quantity in our analyses is the inferred marker-level variable $\eta^{align}_{S}$, the level of alignment on category $S$ across all dyads. For lexical and CNW alignments, this is essentially a weighted average over the different lexical items in the category.
+
+\subsubsection{Results}
+We implemented WHAM in RStan \cite{Stan}, with code available at \url{http://github.com/langcog/alignment}. The model is fit with two chains of 200 iterations of the sampler (100 discarded as burn-in) for each dataset; judging from trace plots, this setting led to reliable convergence.  We then extracted alignment estimates from each of the final 100 iterations of the model, and we report the 95\% highest posterior density interval on the parameter values in these plots, shown in Figures \ref{
+
+We find that there are substantial differences across contexts in the overall rate of alignment between the corpora (mean category alignment on Twitter was $.19$, while its mean on Switchboard was $-.051$). This may reflect the nature of the two discourses. Replies on Twitter are composed while looking at the preceding message, encouraging the replier to take more account of the other tweeter's words, and a replier can draft and edit their reply to make it better fit the conversation.  Messages on Switchboard, on the other hand, are evanescent, so a replier must compose a reply without looking back at the message, without editing, and in real-time.  In Experiment 2, we will show that differences in discourse structure may also impact the differences in alignment.
+
+Despite these differences, there is a crucial similarity: for both corpora, the strength of lexical alignment is significantly larger than the CNW alignment, according to a $t$-test over all categories (Twitter: $t(10)=.21, p<.001$; Swbd: $t(10)=.12,p=.003$), while lexical and categorical alignment are not significantly different. This suggests that alignment on these categories is substantially lexical, even on categories like pronouns where higher CNW alignments may have been expected.
+
+The two corpora also differ in the correlations between the alignment measures. The Switchboard corpus, despite its overall tendency against category alignment, has significant positive correlations between category and lexical ($r = .71, p=.015$), and category and CNW alignment ($r = .94, p <.001$), as well as marginal positive alignment between lexical and CNW alignment ($r = .52, p = .10$).  This suggests a consistency across words within a category on Switchboard 
+
+\begin{figure}[t]
+  \begin{center}
+    \includegraphics[width=\columnwidth]{results/twitter_line.pdf}
+  \end{center}
+  \caption{Categorical (red), lexical (blue), and CNW (green) alignments on the Twitter dataset. 95\% HPD intervals from WHAM shown.}\label{fig:twitter-res}
+\end{figure}
+
+\begin{figure}[t]
+  \begin{center}
+    \includegraphics[width=\columnwidth]{results/swbda_line.pdf}
+  \end{center}
+  \caption{Categorical (red), lexical (blue), and CNW (green) alignments on the Switchboard dataset. 95\% HPD intervals from WHAM shown.}\label{fig:swbda-res}
+\end{figure}
+
+\subsection{Experiment 2}
+
+The second experiment examines how alignment differs depending on discourse act. In particular, we focus on how the presence of backchannels in Switchboard may account for some of the differences between Twitter and Switchboard. 
+
+\subsubsection{Discourse Acts}
+Different messages within a discourse serve different purposes, and this affects both their linguistic structure and their relationship with neighboring messages.  A simple yes/no question is likely to receive a short, constrained reply, while a statement of an opinion is more likely to yield a longer reply. In addition, different types of messages can either introduce new information to the conversation (e.g., statements, questions, offers) or look back at existing information (e.g., acknowledgments, reformulations, yes/no answers). We hypothesize that alignment will be substantially different depending on the discourse act, as speakers' conversational goals vary.
+
+We focus on a particular kind of discourse act, the backchannel \cite{Yngve1970}. Backchannels are highly common in Switchboard, accounting for almost 20\% of utterances, and include utterances such as single words signaling understanding or misunderstanding (\textit{yeah, uh-huh}) and simple messages expressing mild emotional resonance (\textit{It must have been tough}).  Backchannels are a particularly interesting case because on some categories it is important to align (e.g., matching the tentative or negative tone of a speaker) while in other categories it may be very difficult (e.g., backchannels rarely contain quantifiers or prepositions).
+
+In this experiment, we compare alignment in conversations containing backchannels with those whose backchannels have been removed. This is done by removing every utterance classified as a backchannel from the corpus and parsing the utterances into conversation turns as before. 
+
+\begin{figure}[t]
+  \begin{center}
+    \includegraphics[width=\columnwidth]{results/swbdn_line.pdf}
+  \end{center}
+  \caption{Categorical (red), lexical (blue), and CNW (green) alignments on the Switchboard dataset with backchannels removed. 95\% HPD intervals from WHAM shown.}\label{fig:swbdn-res}
+\end{figure}
+
+\subsubsection{Results}
+
+
+
+%\section*{Acknowledgments}
+%
+%The acknowledgments should go immediately before the references.  Do
+%not number the acknowledgments section. Do not include this section
+%when submitting your paper for review.
+
+% include your own bib file like this:
+%\bibliographystyle{acl}
+%\bibliography{acl2016}
+\bibliography{library}
+\bibliographystyle{acl2016}
+
+\appendix
+
+\section{Supplemental Material}
+\label{sec:supplemental}
+
+(Temporary collection of material that I'm considering adding as supplemental material -- separate from the paper, doesn't count against 8-page limit. [references also don't count against limit])
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c||c|c|c|c|}
+\hline
+%\bf & \bf \multicolumn{4}{c}{Reply} \\ \hline
+\bf Message & \{$\emptyset$\} & \{X\} & \{Y\} & \{X,Y\} \\ \hline
+\{$\emptyset$\} &  160 & 20 & 10 & 10\\
+\{X\} & 140 & 30 & 20 & 10 \\
+\{Y\} & 170 & 10 & 15 & 5 \\
+\hline
+\end{tabular}
+\end{center}
+\caption{\label{table:cnw-example2} Another case where (mean lexical) > categorical alignment.}
+\end{table}
+
+[Proof that LLA and Healey's measure of lexical similarity can depend on message/reply length.]
+
+\end{document}

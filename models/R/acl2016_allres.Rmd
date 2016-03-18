@@ -1,0 +1,1340 @@
+---
+title: "ACL Plots"
+author: "Gabe"
+date: "March 17, 2016"
+output: html_document
+---
+
+
+```{r rmd_options}
+knitr::opts_chunk$set(width=10,echo=FALSE,warning=FALSE, message=FALSE)
+```
+
+Semi-structured info on category-not-word alignment on Twitter and Switchboard as a prelude to the ACL submission.
+
+```{r initialization}
+#Initialization
+library(ggplot2)
+library(data.table)
+library(dplyr)
+library(langcog)
+library(readr)
+library(tidyr)
+library(stringr)
+library(magrittr)
+library(directlabels)
+library(lme4)
+library(rstan)
+library(reshape2)
+library(bit64)
+
+ci_025 <- function(x){quantile(x,.025)}
+ci_05 <- function(x){quantile(x,.05)}
+ci_32 <- function(x){quantile(x,.32)}
+ci_68 <- function(x){quantile(x,.68)}
+ci_95 <- function(x){quantile(x,.95)}
+ci_975 <- function(x){quantile(x,.975)}
+
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
+
+
+invlogit <- function(p) { return(-log(1/p-1))}
+logit <- function(x) { return(exp(x)/(1+exp(x)))}
+
+convertcategories3 <- function(d) {
+  return (d %>%
+            mutate(group = ifelse(category %in% c("pron","article","quant","conj","preps"),"syntactic","conceptual")) %>%
+            mutate(group = factor(group,levels=c("syntactic","conceptual"))) %>%
+            mutate(category = plyr:::revalue(as.factor(category),
+                                             c("certain"="certainty",
+                                               "discrep"="discrepancy",
+                                               "excl"="exclusion",
+                                               "incl"="inclusion",
+                                               "negate"="negation",
+                                               "quant"="quantifier",
+                                               "tentat"="tentative",
+                                               "conj"="conjunction",
+                                               "preps"="preposition",
+                                               "pron"="pronouns"))))
+}
+```
+
+
+```{r fns_fit_models}
+#Functions to automate all this
+
+runcat <- function(infile,outfile,sd=.25,iters=200) {
+#sd <- .25
+
+d2 <- fread(infile) %>%
+  rename(sid=speakerId,rid=replierId) %>%
+  group_by(rid,category) %>%
+  summarise_each(funs(sum), ba, nba, bna, nbna) %>%
+  ungroup() %>%
+  mutate(pa = log(ba/(ba+nba)) - log(bna/(bna+nbna)))
+
+#num_subpops <- length(unique(d2$subpop))
+num_markers <- length(unique(d2$category))
+
+alignment_data <- list(NumMarkers=num_markers,
+                       #NumSubPops = num_subpops,
+                       NumObservations = nrow(d2),
+                       #SpeakerSubPop = d2$subpop,
+                       MarkerType = as.numeric(as.factor(d2$category)),
+                       NumUtterancesAB = d2$ba+d2$nba,
+                       NumUtterancesNotAB = d2$bna+ d2$nbna,
+                       CountsAB = d2$ba,
+                       CountsNotAB = d2$bna,
+                       StdDev = sd)
+
+fit <- stan(file = '../stan/alignment.cauchy.nosubpop.stan', data = alignment_data, 
+            pars = 'eta_ab_pop',include=T,
+            iter = iters, chains =2)
+
+d3 <- d2
+#d3$model_eta <- colMeans(rstan:::extract(fit,"eta_ab_observation")$eta_ab_observation)
+#d3$model_mu <- log(colMeans(rstan:::extract(fit,"mu_ab")$mu_ab))-log(colMeans(rstan:::extract(fit,"mu_notab")$mu_notab))
+
+save(d3,fit,file=outfile)
+
+}
+
+runlex <- function(infile,outfile,sd=.25,iters=200) {
+#sd <- .25
+
+d2 <- fread(infile) %>%
+  rename(sid=speakerId,rid=replierId) %>%
+  separate(category,c('category','lemma')) %>%
+  group_by(rid,category,lemma) %>%
+  summarise_each(funs(sum), ba, nba, bna, nbna) %>%
+  ungroup() %>%
+  mutate(pa = log(ba/(ba+nba)) - log(bna/(bna+nbna)))
+
+num_subpops <- length(unique(d2$lemma))
+num_markers <- length(unique(d2$category))
+
+alignment_data <- list(NumMarkers=num_markers,
+                       NumSubPops = num_subpops,
+                       NumObservations = nrow(d2),
+                       SpeakerSubPop = as.numeric(as.factor(d2$lemma)),
+                       MarkerType = as.numeric(as.factor(d2$category)),
+                       NumUtterancesAB = d2$ba+d2$nba,
+                       NumUtterancesNotAB = d2$bna+ d2$nbna,
+                       CountsAB = d2$ba,
+                       CountsNotAB = d2$bna,
+                       StdDev = sd)
+
+fit <- stan(file = '../stan/alignment.cauchy.stan', data = alignment_data, 
+            pars = c('eta_ab_pop','eta_ab_subpop'),include=T,
+            iter = iters, chains =2)
+
+d3 <- d2
+#d3$model_eta <- colMeans(rstan:::extract(fit,"eta_ab_observation")$eta_ab_observation)
+#d3$model_mu <- log(colMeans(rstan:::extract(fit,"mu_ab")$mu_ab))-log(colMeans(rstan:::extract(fit,"mu_notab")$mu_notab))
+
+save(d3,fit,file=outfile)
+}
+
+runcnw <- function(infile,outfile,sd=.25,iters=200) {
+#sd <- .25
+
+d2 <- fread(infile) %>%
+  rename(sid=speakerId,rid=replierId) %>%
+  separate(category,c('category','lemma','method')) %>%
+  filter(method==1) %>%
+  group_by(rid,category,lemma) %>%
+  summarise_each(funs(sum), ba, nba, bna, nbna) %>%
+  ungroup() %>%
+  mutate(pa = log(ba/(ba+nba)) - log(bna/(bna+nbna)))
+
+num_subpops <- length(unique(d2$lemma))
+num_markers <- length(unique(d2$category))
+
+alignment_data <- list(NumMarkers=num_markers,
+                       NumSubPops = num_subpops,
+                       NumObservations = nrow(d2),
+                       SpeakerSubPop = as.numeric(as.factor(d2$lemma)),
+                       MarkerType = as.numeric(as.factor(d2$category)),
+                       NumUtterancesAB = d2$ba+d2$nba,
+                       NumUtterancesNotAB = d2$bna+ d2$nbna,
+                       CountsAB = d2$ba,
+                       CountsNotAB = d2$bna,
+                       StdDev = sd)
+
+fit <- stan(file = '../stan/alignment.cauchy.stan', data = alignment_data, 
+            pars = c('eta_ab_pop','eta_ab_subpop'),include=T,
+            iter = iters, chains =2)
+
+d3 <- d2
+#d3$model_eta <- colMeans(rstan:::extract(fit,"eta_ab_observation")$eta_ab_observation)
+#d3$model_mu <- log(colMeans(rstan:::extract(fit,"mu_ab")$mu_ab))-log(colMeans(rstan:::extract(fit,"mu_notab")$mu_notab))
+
+save(d3,fit,file=outfile)
+}
+```
+
+```{r fns_analyze_models}
+analyzealign <- function(infile) {
+  
+load(infile)
+etas <- rstan:::extract(fit,"eta_ab_pop")$eta_ab_pop
+meandiffs <- colMeans(etas)  #mean difference between the TRUE (powerful) and FALSE (nonpowerful) alignments
+#mediandiffs <- apply(etas,2,'median')
+ci_upper <- apply(etas,2,'ci_upper')
+ci_lower <- apply(etas,2,'ci_lower')
+#ci_upper <- apply(etas,2,'ci_95')
+#ci_lower <- apply(etas,2,'ci_05')
+
+df <- as.data.frame(list(mean=meandiffs,ci_lower=ci_lower,ci_upper=ci_upper))
+df %<>%
+  mutate(category = unique(d3$category)) %>%
+  convertcategories3()
+
+return(df)
+
+}
+```
+
+```{r fns_plot_models}
+plotbar <- function(df,variable,title,outfile=NULL) {
+  if(variable=='corpus') {
+    q <- ggplot(aes(x=category,y=mean,fill=corpus),data=df) +
+      labs(fill="corpus")
+  } else if (variable=='measure') {
+    q <- ggplot(aes(x=category,y=mean,fill=measure),data=df) +
+      labs(fill="alignment\ntype")
+  }
+  
+  q <- q + geom_bar(position=position_dodge(),stat='identity') +
+  geom_linerange(aes(ymin=ci_lower,ymax=ci_upper,height=0),size=.9,position=position_dodge(width=0.9),color='gray19') +
+  geom_hline(yintercept=0,lty=2) +
+  theme_bw(base_size = 15) +
+  theme(panel.grid = element_blank(),axis.text.x = element_text(angle = 90,hjust=1,vjust=0.5)) +
+  scale_fill_brewer(palette='Set1') +
+  facet_grid(~group,space='free',scale='free_x') +
+  labs(x="marker category",
+       y="estimated alignment",
+       title=title)
+  
+  print(q)
+  
+  if (!is.null(outfile)) {
+    pdf(file=outfile,height=6,width=8)
+    print(q)
+    dev.off()
+  }
+  return(q)
+}
+
+plotline <- function(df,variable,title,outfile=NULL) {
+  if(variable=='corpus') {
+    q <- ggplot(aes(x=category,y=mean,color=corpus),data=df) +
+      labs(color="corpus") +
+      geom_line(aes(group=corpus))
+    
+  } else if (variable=='measure') {
+    q <- ggplot(aes(x=category,y=mean,color=measure),data=df) +
+      labs(color="alignment\ntype") +
+      geom_line(aes(group=measure))
+  }
+  
+  q <- q + geom_pointrange(aes(ymin=ci_lower,ymax=ci_upper,height=0),size=.9,position=position_dodge(width=0.2)) +
+  geom_hline(yintercept=0,lty=2) +
+  theme_bw(base_size = 15) +
+  theme(panel.grid = element_blank(),axis.text.x = element_text(angle = 90,hjust=1,vjust=0.5)) +
+  scale_color_brewer(palette='Set1') +
+  facet_grid(~group,space='free',scale='free_x') +
+  labs(x="marker category",
+       y="estimated alignment",
+       title=title)
+
+  print(q)
+  
+  if (!is.null(outfile)) {
+    pdf(file=outfile,height=6,width=8)
+    print(q)
+    dev.off()
+  }
+  return(q)
+}
+
+plotnoline <- function(df,variable,title,outfile=NULL) {
+  if(variable=='corpus') {
+    q <- ggplot(aes(x=category,y=mean,color=corpus),data=df) +
+      labs(color="corpus")
+  } else if (variable=='measure') {
+    q <- ggplot(aes(x=category,y=mean,color=measure),data=df) +
+      labs(color="alignment\ntype")
+  }
+  
+  q <- q + geom_pointrange(aes(ymin=ci_lower,ymax=ci_upper,height=0),size=.9,position=position_dodge(width=0.5)) +
+  #geom_line(aes(group=measure)) +
+  geom_hline(yintercept=0,lty=2) +
+  theme_bw(base_size = 15) +
+  theme(panel.grid = element_blank(),axis.text.x = element_text(angle = 90,hjust=1,vjust=0.5)) +
+  scale_color_brewer(palette='Set1') +
+  facet_grid(~group,space='free',scale='free_x') +
+  labs(x="marker category",
+       y="estimated alignment",
+       title=title)
+
+  print(q)
+  
+  if (!is.null(outfile)) {
+    pdf(file=outfile,height=6,width=8)
+    print(q)
+    dev.off()
+  }
+  return(q)
+}
+
+```
+
+## Twitter lexical
+
+```{r,eval=TRUE}
+sd <- .25
+
+d2 <- fread('/Users/gdoyle/stuff/stanford/alignment/switchboard/twitter_lexbw.csv') %>%
+  rename(sid=speakerId,rid=replierId) %>%
+  na.omit() %>%
+  group_by(sid,rid,category) %>%
+  summarise_each(funs(sum), ba, nba, bna, nbna) %>%
+  ungroup() %>%
+  mutate(pa = log(ba/(ba+nba)) - log(bna/(bna+nbna)),
+         subpop =1)
+
+num_subpops <- length(unique(d2$subpop))
+num_markers <- length(unique(d2$category))
+
+alignment_data <- list(NumMarkers=num_markers,
+                       NumSubPops = num_subpops,
+                       NumObservations = nrow(d2),
+                       SpeakerSubPop = d2$subpop,
+                       MarkerType = as.numeric(as.factor(d2$category)),
+                       NumUtterancesAB = d2$ba+d2$nba,
+                       NumUtterancesNotAB = d2$bna+ d2$nbna,
+                       CountsAB = d2$ba,
+                       CountsNotAB = d2$bna,
+                       StdDev = sd)
+
+fit <- stan(file = '../stan/alignment.cauchy.stan', data = alignment_data, 
+            iter = 500, chains =2)
+
+d3 <- d2
+d3$model_eta <- colMeans(rstan:::extract(fit,"eta_ab_observation")$eta_ab_observation)
+d3$model_mu <- log(colMeans(rstan:::extract(fit,"mu_ab")$mu_ab))-log(colMeans(rstan:::extract(fit,"mu_notab")$mu_notab))
+
+save(d3,fit,file='../results/acl2016_twitter_lexbw.RData')
+```
+
+```{r}
+load('../results/acl2016_twitter_lexbw.RData')
+etas <- rstan:::extract(fit,"eta_ab_subpop")$eta_ab_subpop
+meandiffs <- colMeans(etas[,2,]-etas[,1,])  #mean difference between the TRUE (powerful) and FALSE (nonpowerful) alignments
+ci_upper <- apply(etas[,2,]-etas[,1,],2,'ci_upper')
+ci_lower <- apply(etas[,2,]-etas[,1,],2,'ci_lower')
+
+df <- as.data.frame(list(mean=meandiffs,ci_lower=ci_lower,ci_upper=ci_upper))
+df %<>%
+  mutate(category = unique(d3$category)) %>%
+  convertcategories3() %>%
+  mutate(color = ifelse(ci_lower<0&ci_upper<0,"less alignment",ifelse(ci_lower>0,"more alignment","n.s."))) %>%
+  mutate(color = factor(color,c("more alignment","n.s.","less alignment")))
+
+#pdf(file="results/www2016_ourpowerdiff_fratio_final95.pdf",height=6,width=6)
+ggplot(aes(y=category,x=mean,color=color),data=df) +
+  geom_point(size=3) +
+  geom_errorbarh(aes(xmin=ci_lower,xmax=ci_upper,height=0),size=1.25) +
+  geom_vline(xintercept=0,lty=2) +
+  theme_bw(base_size = 20) +
+  theme(panel.grid = element_blank(),axis.title.y= element_blank()) +
+  guides(color=FALSE) +
+  scale_color_manual(values=c('#dc322f','#859900','#268bd2')) +
+  facet_grid(group~.,space='free',scale='free') +
+  labs(x="marker category",
+       y="alignment to power",
+       title="Twitter lexical alignment")
+#dev.off()
+
+twitterdf <- bind_rows(twitterdf,df %>% mutate(measure='lex'))
+
+```
+
+## Category alignment
+
+## Twitter
+
+Twitter category alignment
+
+```{r,eval=TRUE}
+sd <- .25
+
+d2 <- fread('/Users/gdoyle/stuff/stanford/alignment/switchboard/twitter_catbw.csv') %>%
+  rename(sid=speakerId,rid=replierId) %>%
+  na.omit() %>%
+  group_by(sid,rid,category) %>%
+  summarise_each(funs(sum), ba, nba, bna, nbna) %>%
+  ungroup() %>%
+  mutate(pa = log(ba/(ba+nba)) - log(bna/(bna+nbna)))
+
+num_markers <- length(unique(d2$category))
+
+alignment_data <- list(NumMarkers=num_markers,
+                       #NumSubPops = num_subpops,
+                       NumObservations = nrow(d2),
+                       #SpeakerSubPop = d2$subpop,
+                       MarkerType = as.numeric(as.factor(d2$category)),
+                       NumUtterancesAB = d2$ba+d2$nba,
+                       NumUtterancesNotAB = d2$bna+ d2$nbna,
+                       CountsAB = d2$ba,
+                       CountsNotAB = d2$bna,
+                       StdDev = sd)
+
+fit <- stan(file = '../stan/alignment.cauchy.nosubpop.stan', data = alignment_data, 
+            pars = 'eta_ab_pop',include=T,
+            iter = 200, chains =2)
+
+d3 <- d2
+#d3$model_eta <- colMeans(rstan:::extract(fit,"eta_ab_observation")$eta_ab_observation)
+#d3$model_mu <- log(colMeans(rstan:::extract(fit,"mu_ab")$mu_ab))-log(colMeans(rstan:::extract(fit,"mu_notab")$mu_notab))
+
+save(d3,fit,file='../results/acl2016_twitter_catbw.RData')
+```
+
+```{r}
+load('../results/acl2016_twitter_catbw.RData')
+etas <- rstan:::extract(fit,"eta_ab_pop")$eta_ab_pop
+meandiffs <- colMeans(etas)  #mean difference between the TRUE (powerful) and FALSE (nonpowerful) alignments
+ci_upper <- apply(etas,2,'ci_upper')
+ci_lower <- apply(etas,2,'ci_lower')
+
+df <- as.data.frame(list(mean=meandiffs,ci_lower=ci_lower,ci_upper=ci_upper))
+df %<>%
+  mutate(category = unique(d3$category)) %>%
+  convertcategories3()
+
+#pdf(file="results/www2016_ourpowerdiff_fratio_final95.pdf",height=6,width=6)
+ggplot(aes(y=category,x=mean),data=df) +
+  geom_point(size=3) +
+  geom_errorbarh(aes(xmin=ci_lower,xmax=ci_upper,height=0),size=1.25) +
+  geom_vline(xintercept=0,lty=2) +
+  theme_bw(base_size = 20) +
+  theme(panel.grid = element_blank(),axis.title.y= element_blank()) +
+  guides(color=FALSE) +
+  scale_color_manual(values=c('#dc322f','#859900','#268bd2')) +
+  facet_grid(group~.,space='free',scale='free') +
+  labs(x="marker category",
+       y="alignment to power",
+       title="Twitter category alignment")
+#dev.off()
+
+twitterdf <- df %>% mutate(corpus='twitter',measure='cat')
+```
+
+
+
+### Switchboard stats
+
+```{r}
+fread('/Users/gdoyle/stuff/stanford/alignment/switchboard/swda_bw_liwc_acl.csv') %>%
+group_by(category) %>%
+summarize(pb=sum(ba+bna)/sum(ba+bna+nba+nbna))
+
+fread('/Users/gdoyle/stuff/stanford/alignment/switchboard/twitter_catbw.csv') %>%
+group_by(category) %>%
+summarize(pb=sum(ba+bna)/sum(ba+bna+nba+nbna))
+
+```
+
+```{r,eval=TRUE}
+sd <- .25
+
+d2 <- fread('/Users/gdoyle/stuff/stanford/alignment/switchboard/swda_bw_liwc_acl.csv') %>%
+  rename(sid=speakerId,rid=replierId) %>%
+  group_by(rid,category) %>%
+  summarise_each(funs(sum), ba, nba, bna, nbna) %>%
+  ungroup() %>%
+  mutate(pa = log(ba/(ba+nba)) - log(bna/(bna+nbna)),
+         subpop =1)
+
+#num_subpops <- length(unique(d2$subpop))
+num_markers <- length(unique(d2$category))
+
+alignment_data <- list(NumMarkers=num_markers,
+                       NumSubPops = num_subpops,
+                       NumObservations = nrow(d2),
+                       #SpeakerSubPop = d2$subpop,
+                       MarkerType = as.numeric(as.factor(d2$category)),
+                       NumUtterancesAB = d2$ba+d2$nba,
+                       NumUtterancesNotAB = d2$bna+ d2$nbna,
+                       CountsAB = d2$ba,
+                       CountsNotAB = d2$bna,
+                       StdDev = sd)
+
+fit <- stan(file = '../stan/alignment.cauchy.nosubpop.stan', data = alignment_data, 
+            iter = 200, chains =2)
+
+d3 <- d2
+d3$model_eta <- colMeans(rstan:::extract(fit,"eta_ab_observation")$eta_ab_observation)
+d3$model_mu <- log(colMeans(rstan:::extract(fit,"mu_ab")$mu_ab))-log(colMeans(rstan:::extract(fit,"mu_notab")$mu_notab))
+
+save(d3,fit,file='../results/acl2016_swbda_catbw.RData')
+```
+
+```{r}
+load('../results/acl2016_swbda_catbw.RData')
+etas <- rstan:::extract(fit,"eta_ab_pop")$eta_ab_pop
+meandiffs <- colMeans(etas)  #mean difference between the TRUE (powerful) and FALSE (nonpowerful) alignments
+ci_upper <- apply(etas,2,'ci_upper')
+ci_lower <- apply(etas,2,'ci_lower')
+
+df <- as.data.frame(list(mean=meandiffs,ci_lower=ci_lower,ci_upper=ci_upper))
+df %<>%
+  mutate(category = unique(d3$category)) %>%
+  convertcategories3()
+
+#pdf(file="results/www2016_ourpowerdiff_fratio_final95.pdf",height=6,width=6)
+ggplot(aes(y=category,x=mean),data=df) +
+  geom_point(size=3) +
+  geom_errorbarh(aes(xmin=ci_lower,xmax=ci_upper,height=0),size=1.25) +
+  geom_vline(xintercept=0,lty=2) +
+  theme_bw(base_size = 20) +
+  theme(panel.grid = element_blank(),axis.title.y= element_blank()) +
+  guides(color=FALSE) +
+  scale_color_manual(values=c('#dc322f','#859900','#268bd2')) +
+  facet_grid(group~.,space='free',scale='free') +
+  labs(x="marker category",
+       y="alignment to power",
+       title="Switchboard category alignment")
+#dev.off()
+
+swbdadf <- df %>% mutate(corpus='swbd-all',measure='cat')
+```
+
+```{r,eval=TRUE}
+sd <- .25
+
+d2 <- fread('/Users/gdoyle/stuff/stanford/alignment/switchboard/swda_catbw_da_forward.csv') %>%
+  rename(sid=speakerId,rid=replierId) %>%
+  group_by(rid,category) %>%
+  summarise_each(funs(sum), ba, nba, bna, nbna) %>%
+  ungroup() %>%
+  mutate(pa = log(ba/(ba+nba)) - log(bna/(bna+nbna)),
+         subpop =1)
+
+#num_subpops <- length(unique(d2$subpop))
+num_markers <- length(unique(d2$category))
+
+alignment_data <- list(NumMarkers=num_markers,
+                       NumSubPops = num_subpops,
+                       NumObservations = nrow(d2),
+                       #SpeakerSubPop = d2$subpop,
+                       MarkerType = as.numeric(as.factor(d2$category)),
+                       NumUtterancesAB = d2$ba+d2$nba,
+                       NumUtterancesNotAB = d2$bna+ d2$nbna,
+                       CountsAB = d2$ba,
+                       CountsNotAB = d2$bna,
+                       StdDev = sd)
+
+fit <- stan(file = '../stan/alignment.cauchy.nosubpop.stan', data = alignment_data, 
+            iter = 200, chains =2)
+
+d3 <- d2
+d3$model_eta <- colMeans(rstan:::extract(fit,"eta_ab_observation")$eta_ab_observation)
+d3$model_mu <- log(colMeans(rstan:::extract(fit,"mu_ab")$mu_ab))-log(colMeans(rstan:::extract(fit,"mu_notab")$mu_notab))
+
+save(d3,fit,file='../results/acl2016_swbdf_catbw.RData')
+```
+
+```{r}
+load('../results/acl2016_swbdf_catbw.RData')
+etas <- rstan:::extract(fit,"eta_ab_pop")$eta_ab_pop
+meandiffs <- colMeans(etas)  #mean difference between the TRUE (powerful) and FALSE (nonpowerful) alignments
+ci_upper <- apply(etas,2,'ci_upper')
+ci_lower <- apply(etas,2,'ci_lower')
+
+df <- as.data.frame(list(mean=meandiffs,ci_lower=ci_lower,ci_upper=ci_upper))
+df %<>%
+  mutate(category = unique(d3$category)) %>%
+  convertcategories3()
+
+#pdf(file="results/www2016_ourpowerdiff_fratio_final95.pdf",height=6,width=6)
+ggplot(aes(y=category,x=mean),data=df) +
+  geom_point(size=3) +
+  geom_errorbarh(aes(xmin=ci_lower,xmax=ci_upper,height=0),size=1.25) +
+  geom_vline(xintercept=0,lty=2) +
+  theme_bw(base_size = 20) +
+  theme(panel.grid = element_blank(),axis.title.y= element_blank()) +
+  guides(color=FALSE) +
+  scale_color_manual(values=c('#dc322f','#859900','#268bd2')) +
+  facet_grid(group~.,space='free',scale='free') +
+  labs(x="marker category",
+       y="alignment to power",
+       title="Switchboard category alignment")
+#dev.off()
+
+swbdfdf <- df %>% mutate(corpus='swbd-forward',measure='cat')
+```
+
+## Switchboard no backsies
+
+```{r,eval=TRUE}
+sd <- .25
+
+d2 <- fread('/Users/gdoyle/stuff/stanford/alignment/switchboard/swda_bw_liwc_nobacksies_acl.csv') %>%
+  rename(sid=speakerId,rid=replierId) %>%
+  group_by(rid,category) %>%
+  summarise_each(funs(sum), ba, nba, bna, nbna) %>%
+  ungroup() %>%
+  mutate(pa = log(ba/(ba+nba)) - log(bna/(bna+nbna)),
+         subpop =1)
+
+#num_subpops <- length(unique(d2$subpop))
+num_markers <- length(unique(d2$category))
+
+alignment_data <- list(NumMarkers=num_markers,
+                       NumSubPops = num_subpops,
+                       NumObservations = nrow(d2),
+                       #SpeakerSubPop = d2$subpop,
+                       MarkerType = as.numeric(as.factor(d2$category)),
+                       NumUtterancesAB = d2$ba+d2$nba,
+                       NumUtterancesNotAB = d2$bna+ d2$nbna,
+                       CountsAB = d2$ba,
+                       CountsNotAB = d2$bna,
+                       StdDev = sd)
+
+fit <- stan(file = '../stan/alignment.cauchy.nosubpop.stan', data = alignment_data, 
+            iter = 200, chains =2)
+
+d3 <- d2
+d3$model_eta <- colMeans(rstan:::extract(fit,"eta_ab_observation")$eta_ab_observation)
+d3$model_mu <- log(colMeans(rstan:::extract(fit,"mu_ab")$mu_ab))-log(colMeans(rstan:::extract(fit,"mu_notab")$mu_notab))
+
+save(d3,fit,file='../results/acl2016_swbdn_catbw.RData')
+```
+
+```{r}
+load('../results/acl2016_swbdn_catbw.RData')
+etas <- rstan:::extract(fit,"eta_ab_pop")$eta_ab_pop
+meandiffs <- colMeans(etas)  #mean difference between the TRUE (powerful) and FALSE (nonpowerful) alignments
+ci_upper <- apply(etas,2,'ci_upper')
+ci_lower <- apply(etas,2,'ci_lower')
+
+df <- as.data.frame(list(mean=meandiffs,ci_lower=ci_lower,ci_upper=ci_upper))
+df %<>%
+  mutate(category = unique(d3$category)) %>%
+  convertcategories3()
+
+#pdf(file="results/www2016_ourpowerdiff_fratio_final95.pdf",height=6,width=6)
+ggplot(aes(y=category,x=mean),data=df) +
+  geom_point(size=3) +
+  geom_errorbarh(aes(xmin=ci_lower,xmax=ci_upper,height=0),size=1.25) +
+  geom_vline(xintercept=0,lty=2) +
+  theme_bw(base_size = 20) +
+  theme(panel.grid = element_blank(),axis.title.y= element_blank()) +
+  guides(color=FALSE) +
+  scale_color_manual(values=c('#dc322f','#859900','#268bd2')) +
+  facet_grid(group~.,space='free',scale='free') +
+  labs(x="marker category",
+       y="alignment to power",
+       title="Switchboard category alignment (no backchannels)")
+#dev.off()
+
+swbdndf <- df %>% mutate(corpus='swbd-noback',measure='cat')
+```
+
+```{r}
+sdf <- bind_rows(swbdadf,swbdndf,swbdfdf)
+ggplot(aes(x=category,y=mean,fill=corpus),data=sdf) +
+  geom_bar(position=position_dodge(),stat='identity') +
+  geom_linerange(aes(ymin=ci_lower,ymax=ci_upper,height=0),size=.9,position=position_dodge(width=0.9)) +
+  #geom_errorbarh(aes(xmin=ci_lower,xmax=ci_upper,height=0),size=1.25,position='dodge') +
+  #geom_errorbar(aes(ymin=ci_lower,ymax=ci_upper,height=0),size=1.25,position='dodge') +
+  geom_vline(xintercept=0,lty=2) +
+  theme_bw(base_size = 20) +
+  theme(panel.grid = element_blank(),axis.title.y= element_blank()) +
+  #guides(color=FALSE) +
+  #scale_color_manual(values=c('#dc322f','#859900','#268bd2')) +
+  facet_grid(~group,space='free',scale='free') +
+  
+  labs(x="marker category",
+       y="alignment to power",
+       title="Switchboard category alignment")
+```
+
+## Switchboard lexical
+
+```{r,eval=TRUE}
+sd <- .25
+
+d2 <- fread('/Users/gdoyle/stuff/stanford/alignment/switchboard/swda_lexbw_liwc_acl.csv') %>%
+  rename(sid=speakerId,rid=replierId) %>%
+  separate(category,c('category','lemma')) %>%
+  group_by(rid,category,lemma) %>%
+  summarise_each(funs(sum), ba, nba, bna, nbna) %>%
+  ungroup() %>%
+  mutate(pa = log(ba/(ba+nba)) - log(bna/(bna+nbna)))
+
+num_subpops <- length(unique(d2$lemma))
+num_markers <- length(unique(d2$category))
+
+alignment_data <- list(NumMarkers=num_markers,
+                       NumSubPops = num_subpops,
+                       NumObservations = nrow(d2),
+                       SpeakerSubPop = as.numeric(as.factor(d2$lemma)),
+                       MarkerType = as.numeric(as.factor(d2$category)),
+                       NumUtterancesAB = d2$ba+d2$nba,
+                       NumUtterancesNotAB = d2$bna+ d2$nbna,
+                       CountsAB = d2$ba,
+                       CountsNotAB = d2$bna,
+                       StdDev = sd)
+
+fit <- stan(file = '../stan/alignment.cauchy.stan', data = alignment_data, 
+            pars = c('eta_ab_pop','eta_ab_subpop'),include=T,
+            iter = 200, chains =2)
+
+d3 <- d2
+#d3$model_eta <- colMeans(rstan:::extract(fit,"eta_ab_observation")$eta_ab_observation)
+#d3$model_mu <- log(colMeans(rstan:::extract(fit,"mu_ab")$mu_ab))-log(colMeans(rstan:::extract(fit,"mu_notab")$mu_notab))
+
+save(d3,fit,file='../results/acl2016_swbda_lexbw.RData')
+```
+
+```{r}
+load('../results/acl2016_swbda_lexbw.RData')
+etas <- rstan:::extract(fit,"eta_ab_pop")$eta_ab_pop
+meandiffs <- colMeans(etas)  #mean difference between the TRUE (powerful) and FALSE (nonpowerful) alignments
+ci_upper <- apply(etas,2,'ci_upper')
+ci_lower <- apply(etas,2,'ci_lower')
+
+df <- as.data.frame(list(mean=meandiffs,ci_lower=ci_lower,ci_upper=ci_upper))
+df %<>%
+  mutate(category = unique(d3$category)) %>%
+  convertcategories3()
+
+#pdf(file="results/www2016_ourpowerdiff_fratio_final95.pdf",height=6,width=6)
+ggplot(aes(y=category,x=mean),data=df) +
+  geom_point(size=3) +
+  geom_errorbarh(aes(xmin=ci_lower,xmax=ci_upper,height=0),size=1.25) +
+  geom_vline(xintercept=0,lty=2) +
+  theme_bw(base_size = 20) +
+  theme(panel.grid = element_blank(),axis.title.y= element_blank()) +
+  guides(color=FALSE) +
+  scale_color_manual(values=c('#dc322f','#859900','#268bd2')) +
+  facet_grid(group~.,space='free',scale='free') +
+  labs(x="marker category",
+       y="alignment to power",
+       title="Switchboard category alignment")
+#dev.off()
+
+swbdadfl <- df %>% mutate(corpus='swbda',measure='lex')
+```
+
+## Switchboard CNW
+
+
+```{r,eval=TRUE}
+sd <- .25
+
+d2 <- fread('/Users/gdoyle/stuff/stanford/alignment/switchboard/swda_cnwbw_liwc_acl.csv') %>%
+  rename(sid=speakerId,rid=replierId) %>%
+  separate(category,c('category','lemma','method')) %>%
+  filter(method==1) %>%
+  group_by(rid,category,lemma) %>%
+  summarise_each(funs(sum), ba, nba, bna, nbna) %>%
+  ungroup() %>%
+  mutate(pa = log(ba/(ba+nba)) - log(bna/(bna+nbna)))
+
+num_subpops <- length(unique(d2$lemma))
+num_markers <- length(unique(d2$category))
+
+alignment_data <- list(NumMarkers=num_markers,
+                       NumSubPops = num_subpops,
+                       NumObservations = nrow(d2),
+                       SpeakerSubPop = as.numeric(as.factor(d2$lemma)),
+                       MarkerType = as.numeric(as.factor(d2$category)),
+                       NumUtterancesAB = d2$ba+d2$nba,
+                       NumUtterancesNotAB = d2$bna+ d2$nbna,
+                       CountsAB = d2$ba,
+                       CountsNotAB = d2$bna,
+                       StdDev = sd)
+
+fit <- stan(file = '../stan/alignment.cauchy.stan', data = alignment_data, 
+            pars = c('eta_ab_pop','eta_ab_subpop'),include=T,
+            iter = 400, chains =2)
+
+d3 <- d2
+#d3$model_eta <- colMeans(rstan:::extract(fit,"eta_ab_observation")$eta_ab_observation)
+#d3$model_mu <- log(colMeans(rstan:::extract(fit,"mu_ab")$mu_ab))-log(colMeans(rstan:::extract(fit,"mu_notab")$mu_notab))
+
+save(d3,fit,file='../results/acl2016_swbda_cnwbw.RData')
+```
+
+```{r}
+load('../results/acl2016_swbda_cnwbw.RData')
+etas <- rstan:::extract(fit,"eta_ab_pop")$eta_ab_pop
+meandiffs <- colMeans(etas)  #mean difference between the TRUE (powerful) and FALSE (nonpowerful) alignments
+ci_upper <- apply(etas,2,'ci_upper')
+ci_lower <- apply(etas,2,'ci_lower')
+
+df <- as.data.frame(list(mean=meandiffs,ci_lower=ci_lower,ci_upper=ci_upper))
+df %<>%
+  mutate(category = unique(d3$category)) %>%
+  convertcategories3()
+
+#pdf(file="results/www2016_ourpowerdiff_fratio_final95.pdf",height=6,width=6)
+ggplot(aes(y=category,x=mean),data=df) +
+  geom_point(size=3) +
+  geom_errorbarh(aes(xmin=ci_lower,xmax=ci_upper,height=0),size=1.25) +
+  geom_vline(xintercept=0,lty=2) +
+  theme_bw(base_size = 20) +
+  theme(panel.grid = element_blank(),axis.title.y= element_blank()) +
+  guides(color=FALSE) +
+  scale_color_manual(values=c('#dc322f','#859900','#268bd2')) +
+  facet_grid(group~.,space='free',scale='free') +
+  labs(x="marker category",
+       y="alignment to power",
+       title="Switchboard category alignment")
+#dev.off()
+
+swbdadfc <- df %>% mutate(corpus='swbda',measure='cnw')
+```
+
+
+```{r}
+sdf <- bind_rows(swbdadf,swbdadfl,swbdadfc)
+ggplot(aes(x=category,y=mean,fill=measure),data=sdf) +
+  geom_bar(position=position_dodge(),stat='identity') +
+  geom_linerange(aes(ymin=ci_lower,ymax=ci_upper,height=0),size=.9,position=position_dodge(width=0.9)) +
+  #geom_errorbarh(aes(xmin=ci_lower,xmax=ci_upper,height=0),size=1.25,position='dodge') +
+  #geom_errorbar(aes(ymin=ci_lower,ymax=ci_upper,height=0),size=1.25,position='dodge') +
+  geom_vline(xintercept=0,lty=2) +
+  theme_bw(base_size = 20) +
+  theme(panel.grid = element_blank(),axis.title.y= element_blank()) +
+  #guides(color=FALSE) +
+  #scale_color_manual(values=c('#dc322f','#859900','#268bd2')) +
+  facet_grid(~group,space='free',scale='free') +
+  labs(x="marker category",
+       y="alignment",
+       title="Switchboard (all) alignments")
+```
+
+```{r}
+#Switchboard (all) correlations:
+cor(swbdadf$mean,swbdadfl$mean)   #cat <-> lex
+cor(swbdadf$mean,swbdadfc$mean)   #cat <-> cnw
+cor(swbdadfl$mean,swbdadfc$mean)  #lex <-> cnw
+
+#
+
+```
+
+## Running models
+
+```{r fit_twitter}
+iters <- 200
+runcat('/Users/gdoyle/stuff/stanford/alignment/switchboard/twitter_catbw.csv','../results/acl2016_twitter_catbw.RData',sd=.25,iters=iters)
+runlex('/Users/gdoyle/stuff/stanford/alignment/switchboard/twitter_lexbw.csv','../results/acl2016_twitter_lexbw.RData',sd=.25,iters=iters)
+runcnw('/Users/gdoyle/stuff/stanford/alignment/switchboard/twitter_cnwbw.csv','../results/acl2016_twitter_cnwbw.RData',sd=.25,iters=iters)
+```
+
+```{r fit_swbd_all}
+iters <- 200
+runcat('/Users/gdoyle/stuff/stanford/alignment/switchboard/swda_bw_liwc_acl.csv','../results/acl2016_swbda_catbw.RData',sd=.25,iters=iters)
+runlex('/Users/gdoyle/stuff/stanford/alignment/switchboard/swda_lexbw_liwc_acl.csv','../results/acl2016_swbda_lexbw.RData',sd=.25,iters=iters)
+runcnw('/Users/gdoyle/stuff/stanford/alignment/switchboard/swda_cnwbw_liwc_acl.csv','../results/acl2016_swbda_cnwbw.RData',sd=.25,iters=iters)
+```
+
+```{r fit_swbd_nb}
+iters <- 200
+#runcat('/Users/gdoyle/stuff/stanford/alignment/switchboard/swda_bw_liwc_nobacksies_acl.csv','../results/acl2016_swbdn_catbw.RData',sd=.25,iters=iters)
+runlex('/Users/gdoyle/stuff/stanford/alignment/switchboard/swda_lexbw_liwc_nobacksies_acl.csv','../results/acl2016_swbdn_lexbw.RData',sd=.25,iters=iters)
+runcnw('/Users/gdoyle/stuff/stanford/alignment/switchboard/swda_cnwbw_liwc_nobacksies_acl.csv','../results/acl2016_swbdn_cnwbw.RData',sd=.25,iters=iters)
+```
+
+
+
+```{r fit_400}
+iters <- 400
+runcat('/Users/gdoyle/stuff/stanford/alignment/switchboard/twitter_catbw.csv','../results/acl2016_twitter_catbw_400.RData',sd=.25,iters=iters)
+runlex('/Users/gdoyle/stuff/stanford/alignment/switchboard/twitter_lexbw.csv','../results/acl2016_twitter_lexbw_400.RData',sd=.25,iters=iters)
+runcnw('/Users/gdoyle/stuff/stanford/alignment/switchboard/twitter_cnwbw.csv','../results/acl2016_twitter_cnwbw_400.RData',sd=.25,iters=iters)
+runcat('/Users/gdoyle/stuff/stanford/alignment/switchboard/swda_bw_liwc_acl.csv','../results/acl2016_swbda_catbw_400.RData',sd=.25,iters=iters)
+runlex('/Users/gdoyle/stuff/stanford/alignment/switchboard/swda_lexbw_liwc_acl.csv','../results/acl2016_swbda_lexbw_400.RData',sd=.25,iters=iters)
+runcnw('/Users/gdoyle/stuff/stanford/alignment/switchboard/swda_cnwbw_liwc_acl.csv','../results/acl2016_swbda_cnwbw_400.RData',sd=.25,iters=iters)
+runcat('/Users/gdoyle/stuff/stanford/alignment/switchboard/swda_bw_liwc_nobacksies_acl.csv','../results/acl2016_swbdn_catbw_400.RData',sd=.25,iters=iters)
+runlex('/Users/gdoyle/stuff/stanford/alignment/switchboard/swda_lexbw_liwc_nobacksies_acl.csv','../results/acl2016_swbdn_lexbw_400.RData',sd=.25,iters=iters)
+runcnw('/Users/gdoyle/stuff/stanford/alignment/switchboard/swda_cnwbw_liwc_nobacksies_acl.csv','../results/acl2016_swbdn_cnwbw_400.RData',sd=.25,iters=iters)
+```
+
+
+## Results
+
+```{r analyze_twitter}
+dfall <- analyzealign('../results/acl2016_twitter_catbw.RData') %>% mutate(corpus='twitter',measure='category')
+dfall <- bind_rows(dfall,
+         analyzealign('../results/acl2016_twitter_lexbw.RData') %>% mutate(corpus='twitter',measure='lexical'))
+dfall <- bind_rows(dfall,
+         analyzealign('../results/acl2016_twitter_cnwbw.RData') %>% mutate(corpus='twitter',measure='CNW'))
+dfall$measure <- factor(dfall$measure,levels=c('category','lexical','CNW'))
+
+if(doPlots) {
+plotbar(dfall,'measure','Twitter alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/twitter_bar.pdf')
+plotline(dfall,'measure','Twitter alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/twitter_line.pdf')
+plotnoline(dfall,'measure','Twitter alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/twitter_noline.pdf')
+}
+
+twitterdfall <- dfall
+
+twittercor <- cor(dfall %>% 
+  select(mean,category,corpus,measure) %>%
+  rename(cat=category) %>%
+  spread(measure,mean) %>%
+  select(-cat,-corpus))
+
+```
+
+```{r analyze_swbd_all}
+dfall <- analyzealign('../results/acl2016_swbda_catbw.RData') %>% mutate(corpus='swbd-all',measure='category')
+dfall <- bind_rows(dfall,
+         analyzealign('../results/acl2016_swbda_lexbw.RData') %>% mutate(corpus='swbd-all',measure='lexical'))
+dfall <- bind_rows(dfall,
+         analyzealign('../results/acl2016_swbda_cnwbw.RData') %>% mutate(corpus='swbd-all',measure='CNW'))
+dfall$measure <- factor(dfall$measure,levels=c('category','lexical','CNW'))
+
+if(doPlots) {
+plotbar(dfall,'measure','Switchboard alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/swbda_bar.pdf')
+plotline(dfall,'measure','Switchboard alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/swbda_line.pdf')
+plotnoline(dfall,'measure','Switchboard alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/swbda_noline.pdf')
+}
+
+swbdadfall <- dfall
+
+swbdacor <- cor(dfall %>% 
+  select(mean,category,corpus,measure) %>%
+  rename(cat=category) %>%
+  spread(measure,mean) %>%
+  select(-cat,-corpus))
+
+```
+
+```{r analyze_swbd_nb}
+dfall <- analyzealign('../results/acl2016_swbdn_catbw.RData') %>% mutate(corpus='swbd-noback',measure='category')
+dfall <- bind_rows(dfall,
+         analyzealign('../results/acl2016_swbdn_lexbw.RData') %>% mutate(corpus='swbd-noback',measure='lexical'))
+dfall <- bind_rows(dfall,
+         analyzealign('../results/acl2016_swbdn_cnwbw.RData') %>% mutate(corpus='swbd-noback',measure='CNW'))
+dfall$measure <- factor(dfall$measure,levels=c('category','lexical','CNW'))
+
+if(doPlots) {
+plotbar(dfall,'measure','Switchboard alignments (w/o backchannels)','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/swbdn_bar.pdf')
+plotline(dfall,'measure','Switchboard alignments (w/o backchannels)','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/swbdn_line.pdf')
+plotnoline(dfall,'measure','Switchboard alignments (w/o backchannels)','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/swbdn_noline.pdf')
+}
+
+swbdndfall <- dfall 
+
+swbdncor <- cor(dfall %>% 
+  select(mean,category,corpus,measure) %>%
+  rename(cat=category) %>%
+  spread(measure,mean) %>%
+  select(-cat,-corpus))
+
+```
+
+```{r analyze_cat2}
+dfall <- analyzealign('../results/acl2016_twitter_catbw.RData') %>% mutate(corpus='twitter',measure='category')
+dfall <- bind_rows(dfall,
+         analyzealign('../results/acl2016_swbda_catbw.RData') %>% mutate(corpus='swbd',measure='category'))
+#dfall <- bind_rows(dfall,
+#         analyzealign('../results/acl2016_swbdn_cnwbw.RData') %>% mutate(corpus='swbd-noback',measure='CNW'))
+dfall$measure <- factor(dfall$measure,levels=c('twitter','swbd'))
+
+plotbar(dfall,'corpus','Category alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/catbw2_bar.pdf')
+plotline(dfall,'corpus','Category alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/catbw2_line.pdf')
+plotnoline(dfall,'corpus','Category alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/catbw2_noline.pdf')
+
+catcor <- cor(dfall %>% 
+  select(mean,category,corpus) %>%
+  spread(corpus,mean) %>%
+  select(-category))
+
+```
+
+```{r analyze_lex2}
+dfall <- analyzealign('../results/acl2016_twitter_lexbw.RData') %>% mutate(corpus='twitter',measure='lexical')
+dfall <- bind_rows(dfall,
+         analyzealign('../results/acl2016_swbda_lexbw.RData') %>% mutate(corpus='swbd',measure='lexical'))
+#dfall <- bind_rows(dfall,
+#         analyzealign('../results/acl2016_swbdn_cnwbw.RData') %>% mutate(corpus='swbd-noback',measure='CNW'))
+dfall$measure <- factor(dfall$measure,levels=c('twitter','swbd'))
+
+plotbar(dfall,'corpus','Lexical alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/lexbw2_bar.pdf')
+plotline(dfall,'corpus','Lexical alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/lexbw2_line.pdf')
+plotnoline(dfall,'corpus','Lexical alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/lexbw2_noline.pdf')
+
+lexcor <- cor(dfall %>% 
+  select(mean,category,corpus) %>%
+  spread(corpus,mean) %>%
+  select(-category))
+
+```
+
+```{r analyze_cnw2}
+dfall <- analyzealign('../results/acl2016_twitter_cnwbw.RData') %>% mutate(corpus='twitter',measure='CNW')
+dfall <- bind_rows(dfall,
+         analyzealign('../results/acl2016_swbda_cnwbw.RData') %>% mutate(corpus='swbd',measure='CNW'))
+#dfall <- bind_rows(dfall,
+#         analyzealign('../results/acl2016_swbdn_cnwbw.RData') %>% mutate(corpus='swbd-noback',measure='CNW'))
+dfall$measure <- factor(dfall$measure,levels=c('twitter','swbd'))
+
+plotbar(dfall,'corpus','CNW alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/cnwbw2_bar.pdf')
+plotline(dfall,'corpus','CNW alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/cnwbw2_line.pdf')
+plotnoline(dfall,'corpus','CNW alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/cnwbw2_noline.pdf')
+
+cnwcor <- cor(dfall %>% 
+  select(mean,category,corpus) %>%
+  spread(corpus,mean) %>%
+  select(-category))
+
+```
+
+
+```{r analyze_cat3}
+dfall <- analyzealign('../results/acl2016_twitter_catbw.RData') %>% mutate(corpus='twitter',measure='category')
+dfall <- bind_rows(dfall,
+         analyzealign('../results/acl2016_swbda_catbw.RData') %>% mutate(corpus='swbd-all',measure='category'))
+dfall <- bind_rows(dfall,
+         analyzealign('../results/acl2016_swbdn_catbw.RData') %>% mutate(corpus='swbd-noback',measure='category'))
+dfall$measure <- factor(dfall$measure,levels=c('twitter','swbd-all','swbd-noback'))
+
+if (doPlots) {
+plotbar(dfall,'corpus','Category alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/catbw3_bar.pdf')
+plotline(dfall,'corpus','Category alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/catbw3_line.pdf')
+plotnoline(dfall,'corpus','Category alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/catbw3_noline.pdf')
+}
+
+catdfall <- dfall
+
+catcor <- cor(dfall %>% 
+  select(mean,category,corpus) %>%
+  spread(corpus,mean) %>%
+  select(-category))
+
+```
+
+```{r analyze_lex3}
+dfall <- analyzealign('../results/acl2016_twitter_lexbw.RData') %>% mutate(corpus='twitter',measure='lexical')
+dfall <- bind_rows(dfall,
+         analyzealign('../results/acl2016_swbda_lexbw.RData') %>% mutate(corpus='swbd-all',measure='lexical'))
+dfall <- bind_rows(dfall,
+         analyzealign('../results/acl2016_swbdn_lexbw.RData') %>% mutate(corpus='swbd-noback',measure='lexical'))
+dfall$measure <- factor(dfall$measure,levels=c('twitter','swbd-all','swbd-noback'))
+
+if (doPlots) {
+plotbar(dfall,'corpus','Lexical alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/lexbw3_bar.pdf')
+plotline(dfall,'corpus','Lexical alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/lexbw3_line.pdf')
+plotnoline(dfall,'corpus','Lexical alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/lexbw3_noline.pdf')
+}
+
+lexdfall <- dfall
+
+lexcor <- cor(dfall %>% 
+  select(mean,category,corpus) %>%
+  spread(corpus,mean) %>%
+  select(-category))
+
+```
+
+```{r analyze_cnw3}
+dfall <- analyzealign('../results/acl2016_twitter_cnwbw.RData') %>% mutate(corpus='twitter',measure='CNW')
+dfall <- bind_rows(dfall,
+         analyzealign('../results/acl2016_swbda_cnwbw.RData') %>% mutate(corpus='swbd-all',measure='CNW'))
+dfall <- bind_rows(dfall,
+         analyzealign('../results/acl2016_swbdn_cnwbw.RData') %>% mutate(corpus='swbd-noback',measure='CNW'))
+dfall$measure <- factor(dfall$measure,levels=c('twitter','swbd-all','swbd-noback'))
+
+if (doPlots) {
+plotbar(dfall,'corpus','CNW alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/cnwbw3_bar.pdf')
+plotline(dfall,'corpus','CNW alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/cnwbw3_line.pdf')
+plotnoline(dfall,'corpus','CNW alignments','/Users/gdoyle/stuff/stanford/alignment/alignment/alignment/papers/acl2016/results/cnwbw3_noline.pdf')
+}
+
+cnwdfall <- dfall
+
+cnwcor <- cor(dfall %>% 
+  select(mean,category,corpus) %>%
+  spread(corpus,mean) %>%
+  select(-category))
+
+```
+
+## By-lemma lex/cnw alignments
+
+```{r calc_bylemma_correlations,eval=F}
+#THIS DOESN'T WORK RIGHT NOW
+getmeanbylemma <- function(infile) {
+  
+load(infile)
+etas <- rstan:::extract(fit,"eta_ab_subpop")$eta_ab_subpop
+means <- colMeans(etas)
+goodcats <- as.numeric(as.factor(d3$category))
+goodlems <- as.numeric(as.factor(d3$lemma))
+
+goodmat <- matrix(0,nrow=max(goodlems),ncol=max(goodcats))
+for(i in 1:length(goodcats)) {
+  goodmat[goodlems[i],goodcats[i]] <- 1
+}
+
+goodvals <- as.vector(goodmat*means)
+goodvals <- goodvals[goodvals!=0]
+
+return(goodvals)
+}
+
+cordf <- data.frame(twitterlex = getmeanbylemma('../results/acl2016_twitter_lexbw.RData'))
+cordf$swbdalex <- getmeanbylemma('../results/acl2016_swbda_lexbw.RData')
+cordf$swbdnlex <- getmeanbylemma('../results/acl2016_swbdn_lexbw.RData')
+cordf$twittercnw <- getmeanbylemma('../results/acl2016_twitter_cnwbw.RData')
+cordf$swbdacnw <- getmeanbylemma('../results/acl2016_swbda_cnwbw.RData')
+cordf$swbdncnw <- getmeanbylemma('../results/acl2016_swbdn_cnwbw.RData')
+
+lemmacor <- cor(cordf)
+```
+
+## Difference plots
+
+```{r}
+dfdiff <- dfall %>% select(mean,category,group,corpus) %>%
+  spread(corpus,mean) %>%
+  mutate(diff=twitter-swbd)
+
+ggplot(aes(x=swbd,y=twitter),data=dfdiff) +
+  geom_point()
+
+dfdiff <- dfall %>% select(mean,category,group,measure) %>%
+  rename(cat=category) %>%
+  spread(measure,mean) #%>%
+  #mutate(diff=twitter-swbd)
+
+ggplot(aes(x=category,y=lexical,size=CNW),data=dfdiff) +
+  geom_point()
+
+  
+```
+
+```{r}
+#Correlation tests across corpora
+catdfall %>% 
+  select(mean,category,corpus) %>%
+  spread(corpus,mean) %>%
+  select(-category) %>%
+  summarize(twitter_noback_c=cor.test(`twitter`,`swbd-noback`)$estimate,
+            twitter_noback_p=cor.test(`twitter`,`swbd-noback`)$p.value,
+            twitter_all_c=cor.test(`twitter`,`swbd-all`)$estimate,
+            twitter_all_p=cor.test(`twitter`,`swbd-all`)$p.value,
+            all_noback_c=cor.test(`swbd-all`,`swbd-noback`)$estimate,
+            all_noback_p=cor.test(`swbd-all`,`swbd-noback`)$p.value)
+
+lexdfall %>% 
+  select(mean,category,corpus) %>%
+  spread(corpus,mean) %>%
+  select(-category) %>%
+  summarize(twitter_noback_c=cor.test(`twitter`,`swbd-noback`)$estimate,
+            twitter_noback_p=cor.test(`twitter`,`swbd-noback`)$p.value,
+            twitter_all_c=cor.test(`twitter`,`swbd-all`)$estimate,
+            twitter_all_p=cor.test(`twitter`,`swbd-all`)$p.value,
+            all_noback_c=cor.test(`swbd-all`,`swbd-noback`)$estimate,
+            all_noback_p=cor.test(`swbd-all`,`swbd-noback`)$p.value)
+
+cnwdfall %>% 
+  select(mean,category,corpus) %>%
+  spread(corpus,mean) %>%
+  select(-category) %>%
+  summarize(twitter_noback_c=cor.test(`twitter`,`swbd-noback`)$estimate,
+            twitter_noback_p=cor.test(`twitter`,`swbd-noback`)$p.value,
+            twitter_all_c=cor.test(`twitter`,`swbd-all`)$estimate,
+            twitter_all_p=cor.test(`twitter`,`swbd-all`)$p.value,
+            all_noback_c=cor.test(`swbd-all`,`swbd-noback`)$estimate,
+            all_noback_p=cor.test(`swbd-all`,`swbd-noback`)$p.value)
+
+#Correlation tests within corpora
+twitterdfall %>% 
+  select(mean,category,measure) %>%
+  rename(cat=category) %>%
+  spread(measure,mean) %>%
+  select(-cat) %>%
+  summarize(cat_lex_c=cor.test(category,lexical)$estimate,
+            cat_lex_p=cor.test(category,lexical)$p.value,
+            cat_cnw_c=cor.test(category,CNW)$estimate,
+            cat_cnw_p=cor.test(category,CNW)$p.value,
+            lex_cnw_c=cor.test(lexical,CNW)$estimate,
+            lex_cnw_p=cor.test(lexical,CNW)$p.value)
+
+swbdadfall %>% 
+  select(mean,category,measure) %>%
+  rename(cat=category) %>%
+  spread(measure,mean) %>%
+  select(-cat) %>%
+  summarize(cat_lex_c=cor.test(category,lexical)$estimate,
+            cat_lex_p=cor.test(category,lexical)$p.value,
+            cat_cnw_c=cor.test(category,CNW)$estimate,
+            cat_cnw_p=cor.test(category,CNW)$p.value,
+            lex_cnw_c=cor.test(lexical,CNW)$estimate,
+            lex_cnw_p=cor.test(lexical,CNW)$p.value)
+
+swbdndfall %>% 
+  select(mean,category,measure) %>%
+  rename(cat=category) %>%
+  spread(measure,mean) %>%
+  select(-cat) %>%
+  summarize(cat_lex_c=cor.test(category,lexical)$estimate,
+            cat_lex_p=cor.test(category,lexical)$p.value,
+            cat_cnw_c=cor.test(category,CNW)$estimate,
+            cat_cnw_p=cor.test(category,CNW)$p.value,
+            lex_cnw_c=cor.test(lexical,CNW)$estimate,
+            lex_cnw_p=cor.test(lexical,CNW)$p.value)
+
+```
+
+```{r}
+alldfall <- bind_rows(twitterdfall,swbdadfall,swbdndfall)
+
+alldfall %>% select(-ci_upper,-ci_lower,-group) %>%
+  rename(cat=category) %>%
+  spread(measure,mean) %>%
+  group_by(corpus) %>%
+  summarize(lexcnw=mean(lexical-CNW))
+
+twitterdfall %>% select(-ci_upper,-ci_lower,-group) %>%
+  rename(cat=category) %>%
+  spread(measure,mean) %>%
+  summarize(cat_lex_c=t.test(category-lexical)$estimate,
+            cat_lex_p=t.test(category-lexical)$p.value,
+            cat_cnw_c=t.test(category-CNW)$estimate,
+            cat_cnw_p=t.test(category-CNW)$p.value,
+            lex_cnw_c=t.test(lexical-CNW)$estimate,
+            lex_cnw_p=t.test(lexical-CNW)$p.value)
+
+swbdadfall %>% select(-ci_upper,-ci_lower,-group) %>%
+  rename(cat=category) %>%
+  spread(measure,mean) %>%
+  summarize(cat_lex_c=t.test(category-lexical)$estimate,
+            cat_lex_p=t.test(category-lexical)$p.value,
+            cat_cnw_c=t.test(category-CNW)$estimate,
+            cat_cnw_p=t.test(category-CNW)$p.value,
+            lex_cnw_c=t.test(lexical-CNW)$estimate,
+            lex_cnw_p=t.test(lexical-CNW)$p.value)
+
+swbdndfall %>% select(-ci_upper,-ci_lower,-group) %>%
+  rename(cat=category) %>%
+  spread(measure,mean) %>%
+  summarize(cat_lex_c=t.test(category-lexical)$estimate,
+            cat_lex_p=t.test(category-lexical)$p.value,
+            cat_cnw_c=t.test(category-CNW)$estimate,
+            cat_cnw_p=t.test(category-CNW)$p.value,
+            lex_cnw_c=t.test(lexical-CNW)$estimate,
+            lex_cnw_p=t.test(lexical-CNW)$p.value)
+
+```
+
+## Old results
+
+```{r load_plot_results_swbd_all}
+dfall <- analyzealign('../results/acl2016_swbda_catbw.RData') %>% mutate(corpus='swbda',measure='categorical')
+dfall <- bind_rows(dfall,
+          analyzealign('../results/acl2016_swbda_lexbw.RData') %>% mutate(corpus='swbda',measure='lexical'))
+dfall <- bind_rows(dfall,
+          analyzealign('../results/acl2016_swbda_cnwbw.RData') %>% mutate(corpus='swbda',measure='CNW'))
+dfall$measure <- factor(dfall$measure,levels=c('categorical','lexical','CNW'))
+
+ggplot(aes(x=category,y=mean,fill=measure),data=dfall) +
+  geom_bar(position=position_dodge(),stat='identity') +
+  geom_linerange(aes(ymin=ci_lower,ymax=ci_upper,height=0),size=.9,position=position_dodge(width=0.9)) +
+  #geom_line(aes(group=measure)) +
+  #geom_errorbarh(aes(xmin=ci_lower,xmax=ci_upper,height=0),size=1.25,position='dodge') +
+  #geom_errorbar(aes(ymin=ci_lower,ymax=ci_upper,height=0),size=1.25,position='dodge') +
+  geom_hline(yintercept=0,lty=2) +
+  theme_bw(base_size = 20) +
+  theme(panel.grid = element_blank(),axis.text.x = element_text(angle = 90,hjust=1,vjust=0.5)) +
+  #guides(color=FALSE) +
+  #scale_color_manual(values=c('#dc322f','#859900','#268bd2')) +
+  scale_fill_brewer(palette='Set1') +
+  facet_grid(~group,space='free',scale='free') +
+  labs(x="marker category",
+       y="estimated alignment",
+       color="alignment\nmeasure",
+       title="Switchboard alignments")
+
+
+ggplot(aes(x=category,y=mean,color=measure),data=dfall) +
+  #geom_bar(position=position_dodge(),stat='identity') +
+  geom_pointrange(aes(ymin=ci_lower,ymax=ci_upper,height=0),size=.9,position=position_dodge(width=0.2)) +
+  geom_line(aes(group=measure)) +
+  #geom_errorbarh(aes(xmin=ci_lower,xmax=ci_upper,height=0),size=1.25,position='dodge') +
+  #geom_errorbar(aes(ymin=ci_lower,ymax=ci_upper,height=0),size=1.25,position='dodge') +
+  geom_hline(yintercept=0,lty=2) +
+  theme_bw(base_size = 20) +
+  theme(panel.grid = element_blank(),axis.text.x = element_text(angle = 90,hjust=1,vjust=0.5)) +
+  #guides(color=FALSE) +
+  #scale_color_manual(values=c('#dc322f','#859900','#268bd2')) +
+  scale_color_brewer(palette='Set1') +
+  facet_grid(~group,space='free',scale='free') +
+  labs(x="marker category",
+       y="estimated alignment",
+       color="alignment\nmeasure",
+       title="Switchboard alignments")
+```
+
+```{r load_plot_results_cat}
+dfall <- analyzealign('../results/acl2016_swbda_catbw.RData') %>% mutate(corpus='swbd-all',measure='categorical')
+dfall <- bind_rows(dfall,
+          analyzealign('../results/acl2016_swbdn_catbw.RData') %>% mutate(corpus='swbd-noback',measure='categorical'))
+dfall <- bind_rows(dfall,
+          analyzealign('../results/acl2016_twitter_catbw.RData') %>% mutate(corpus='twitter',measure='categorical'))
+#dfall$measure <- factor(dfall$measure,levels=c('categorical','lexical','CNW'))
+
+ggplot(aes(x=category,y=mean,fill=corpus),data=dfall) +
+  geom_bar(position=position_dodge(),stat='identity') +
+  geom_linerange(aes(ymin=ci_lower,ymax=ci_upper,height=0),size=.9,position=position_dodge(width=0.9)) +
+  #geom_line(aes(group=measure)) +
+  #geom_errorbarh(aes(xmin=ci_lower,xmax=ci_upper,height=0),size=1.25,position='dodge') +
+  #geom_errorbar(aes(ymin=ci_lower,ymax=ci_upper,height=0),size=1.25,position='dodge') +
+  geom_hline(yintercept=0,lty=2) +
+  theme_bw(base_size = 20) +
+  theme(panel.grid = element_blank(),axis.text.x = element_text(angle = 90,hjust=1,vjust=0.5)) +
+  #guides(color=FALSE) +
+  #scale_color_manual(values=c('#dc322f','#859900','#268bd2')) +
+  scale_fill_brewer(palette='Set1') +
+  facet_grid(~group,space='free',scale='free') +
+  labs(x="marker category",
+       y="estimated alignment",
+       color="alignment\nmeasure",
+       title="Category alignments")
+
+
+ggplot(aes(x=category,y=mean,color=corpus),data=dfall) +
+  #geom_bar(position=position_dodge(),stat='identity') +
+  geom_pointrange(aes(ymin=ci_lower,ymax=ci_upper,height=0),size=.9,position=position_dodge(width=0.2)) +
+  geom_line(aes(group=corpus)) +
+  #geom_errorbarh(aes(xmin=ci_lower,xmax=ci_upper,height=0),size=1.25,position='dodge') +
+  #geom_errorbar(aes(ymin=ci_lower,ymax=ci_upper,height=0),size=1.25,position='dodge') +
+  geom_hline(yintercept=0,lty=2) +
+  theme_bw(base_size = 20) +
+  theme(panel.grid = element_blank(),axis.text.x = element_text(angle = 90,hjust=1,vjust=0.5)) +
+  #guides(color=FALSE) +
+  #scale_color_manual(values=c('#dc322f','#859900','#268bd2')) +
+  scale_color_brewer(palette='Set1') +
+  facet_grid(~group,space='free',scale='free') +
+  labs(x="marker category",
+       y="estimated alignment",
+       color="alignment\nmeasure",
+       title="Category alignments")
+
+cor(filter(dfall,corpus=='swbd-all')$mean,filter(dfall,corpus=='swbd-noback')$mean)
+cor(filter(dfall,corpus=='swbd-all')$mean,filter(dfall,corpus=='twitter')$mean)
+cor(filter(dfall,corpus=='twitter')$mean,filter(dfall,corpus=='swbd-noback')$mean)
+
+```

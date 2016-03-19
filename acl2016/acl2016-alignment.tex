@@ -58,7 +58,7 @@
 \begin{abstract}
 In conversation, speakers tend to ``accommodate'' or ``align'' to their partners, changing the style and substance of their communications to be more similar to their partners' utterances. We focus here on ``linguistic alignment,'' changes in word choice based on others' choices. Although linguistic alignment is observed across many different contexts and its degree correlates with important social factors such as power and likability, its sources are still uncertain.
 We build on a recent probabilistic model of alignment, using it to separate out alignment attributable to words versus word categories. We model alignment in two contexts: telephone conversations and microblog replies.
-Our results show strong evidence of alignment, but it is primarily lexical rather than categorical. Furthermore, we find that discourse acts modulate alignment substantially. This evidence supports the view that alignment is shaped by strategic communicative processes related to the ongoing discourse.
+Our results show evidence of alignment, but it is primarily lexical rather than categorical. Furthermore, we find that discourse acts modulate alignment substantially. This evidence supports the view that alignment is shaped by strategic communicative processes related to the ongoing discourse.
 \end{abstract}
 
 \section{Introduction}
@@ -249,7 +249,7 @@ $\emptyset$ & 25 & 25 & 25\\
 \caption{\label{table:cnw-example1} A theoretical case where lexical alignment surpasses categorical alignment due to negative CNW between the words.}
 \end{table}
 
-Assessing the amount of alignment triggered across words in a category (which we call ``category-not-word alignment'' or CNW) is not trivial, as there are a variety of interactions between lexical items within a category that can cause the lexical alignment to actually be less than the category alignment. Table \ref{table:cnw-example1} illustrates this with a theoretical distribution over the pronouns \textit{he} and \textit{she}; one use of the pronoun \textit{he} makes another use more likely (\textit{Did he like the movie? Yeah, he loved it.}) while also reducing the likelihood of \textit{she}, since the topic of conversation is now a male, and vice versa for \textit{she}. For both \textit{he} and \textit{she}, the lexical alignment is approximately $logit^{-1}(p(B|A)-p(B|\neg A)) = logit^{-1}(\frac{50}{80}-\frac{25}{75}) \approx 1.2$,
+Assessing the amount of alignment triggered across words in a category (which we call ``category-not-word alignment'' or CNW) is not trivial, as there are a variety of interactions between lexical items within a category that can cause the lexical alignment to actually be less than the category alignment. Table \ref{table:cnw-example1} illustrates this with a theoretical distribution over the pronouns \textit{he} and \textit{she}; one use of the pronoun \textit{he} makes another use more likely (\textit{A: Did he like the movie? B: Yeah, he loved it.}) while also reducing the likelihood of \textit{she}, since the topic of conversation is now a male, and vice versa for \textit{she}. For both \textit{he} and \textit{she}, the lexical alignment is approximately $logit^{-1}(p(B|A)-p(B|\neg A)) = logit^{-1}(\frac{50}{80}-\frac{25}{75}) \approx 1.2$,
 but categorical alignment is approximately $logit^{-1}(\frac{120}{160}-\frac{50}{75}) \approx 0.4$. On the other hand, the pronouns \textit{you} and \textit{I} might trigger each other more than themselves (\textit{A: Did you like the movie? B: Yeah, I loved it.}).
 
 
@@ -343,7 +343,7 @@ We use the discourse-annotated Switchboard corpus to compare alignment in conver
 
 Alignment values for the Switchboard corpus without backchannels are shown in Figure \ref{fig:swbdn-res}. As expected, alignment is on average higher without the backchannels ($p=.09$ for category, $p<.05$ for lexical and CNW), reflecting the constrained nature of backchannels. Lexical alignment is significantly higher than category alignment ($t(10) =-.08, p = .03$), consistent with the findings of Experiment 1. The mean category alignment without backchannels is $.029$.
 
-Turning to the effect of backchannels, Figure \ref{fig:swbds-res} shows the category alignments for the full Switchboard corpus (green) and Switchboard without backchannels (orange). Alignment on the full corpus is lower for all but two categories, exhibiting the reduced opportunity for alignment provided by backchannels. Syntactic category alignment is especially affected by backchannels, whose constrained forms provide very little ability to align syntactically.
+Figure \ref{fig:swbds-res} compares the category alignments for the full Switchboard corpus (green) and Switchboard without backchannels (orange). Alignment on the full corpus is lower for all but two categories, exhibiting the reduced opportunity for alignment provided by backchannels. Syntactic category alignment is especially affected by backchannels, whose constrained forms provide very little ability to align syntactically.
 
 \begin{figure}[t]
   \begin{center}
@@ -357,7 +357,7 @@ Interestingly, the two categories that do show greater alignment when backchanne
 \section{Discussion}
 Linguistic alignment is a prominent type of communicative accommodation, but its sources are unclear.  We presented WHAM, a length-robust extension of a probabilistic alignment model. Using this model, we find evidence that linguistic alignment is primarily lexical, and that it is strongly affected by at least some aspects of the discourse goal of a message.
 
-This combination of a primarily-lexical origin for linguistic alignment and its variation by category and discourse acts suggest that alignment is primarily a higher-level discourse strategy rather than a low-level priming-based mechanism.  This set of results is consistent with both Accommodation Theory \cite{GilesCouplandCoupland1991} and the set of findings, reviewed above, that sociological factors affect the level of observed alignment.  The effect of  discourse acts on alignment further suggests that alignment is not a completely automatic process but rather one of many discourse strategies that speakers use to achieve their conversational goals.
+This combination of a primarily-lexical origin for linguistic alignment and its variation by word category and discourse act suggest that alignment is primarily a higher-level discourse strategy rather than a low-level priming-based mechanism.  This set of results is consistent with both Accommodation Theory \cite{GilesCouplandCoupland1991} and the set of findings, reviewed above, that sociological factors affect the level of observed alignment.  The effect of  discourse acts on alignment further suggests that alignment is not a completely automatic process but rather one of many discourse strategies that speakers use to achieve their conversational goals.
 
 
 

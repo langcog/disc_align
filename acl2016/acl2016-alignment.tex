@@ -231,7 +231,7 @@ Our first experiment examines how alignment differs across the lexical and categ
 
 %Intuitively, category alignment must be no less than the mean lexical alignment of words in the category, since each instance of lexical agreement is also an instance of category agreement.\footnote{More precisely, the weighted mean given lexical frequency.}
 
-\subsection{Measuring category-not-word-alignment}
+\subsection{Category-not-word-alignment model}
 
 \begin{table}[t]
 \begin{center}
@@ -250,7 +250,7 @@ $\emptyset$ & 25 & 25 & 25\\
 \end{table}
 
 Assessing the amount of alignment triggered across words in a category (which we call ``category-not-word alignment'' or CNW) is not trivial, as there are a variety of interactions between lexical items within a category that can cause the lexical alignment to actually be less than the category alignment. Table \ref{table:cnw-example1} illustrates this with a theoretical distribution over the pronouns \textit{he} and \textit{she}; one use of the pronoun \textit{he} makes another use more likely (\textit{Did he like the movie? Yeah, he loved it.}) while also reducing the likelihood of \textit{she}, since the topic of conversation is now a male, and vice versa for \textit{she}. For both \textit{he} and \textit{she}, the lexical alignment is approximately $logit^{-1}(p(B|A)-p(B|\neg A)) = logit^{-1}(\frac{50}{80}-\frac{25}{75}) \approx 1.2$,
-but categorical alignment is approximately $logit^{-1}(\frac{120}{160}-\frac{50}{75}) \approx 0.4$. On the other hand, the pronouns \textit{you} and \textit{I} might trigger each other more than themselves (\textit{Did you like the movie? Yeah, I loved it.}).
+but categorical alignment is approximately $logit^{-1}(\frac{120}{160}-\frac{50}{75}) \approx 0.4$. On the other hand, the pronouns \textit{you} and \textit{I} might trigger each other more than themselves (\textit{A: Did you like the movie? B: Yeah, I loved it.}).
 
 
 % Lexical alignment can differ from categorical alignment for a variety of reasons, so we consider three quantities: the lexical and categorical alignments, but also the ``category-not-word'' (CNW) alignment: the increased likelihood of seeing another member of the category other than the target word.
@@ -274,9 +274,9 @@ but categorical alignment is approximately $logit^{-1}(\frac{120}{160}-\frac{50}
 % \caption{A theoretical case where lexical alignment is below categorical alignment due to greater CNW alignment between the words than lexical alignment.}
 % \end{table}
 
-\subsection{Methods}
-
 To investigate CNW alignment, we look at a subset of the data: for each word $w$, exclude all messages that contain a word from that category ($S$) that is not $w$. This limits the category alignment influence on the reply to the single word $w$. Then, instead of looking at how often $w$ appears in the reply, we look at how often \emph{all other words} in category $S$ appear in the reply.  The model then infers the influence of $w$ on the other words in the category independent of their lexical alignment. Within the WHAM model, we change the count variables $C^\cdot$ and $N^\cdot$ so that $C^{align}$ is the number of tokens of $\{S-w\}$ in replies to messages containing $w$ but not $\{S - w\}$. $C^{base}$ is then the number in replies to messages not containing any words in $S$.  Similarly, $N^{align}$ is the total token counts over replies containing $w$ but not any other words in $S$, and $N^{base}$ the total token counts over replies containing no words in $S$.
+
+\subsection{Methods}
 
 We conducted three sets of simulations, fitting the model with marker categories, individual words, and with the CNW scheme described above.
 In each, the model was fit with two chains of 200 iterations of the sampler for each dataset.  We then extracted alignment estimates from each of the final 100 samples, and we report 95\% highest posterior density intervals on  $\eta^{align}_S$. %in Figures \ref{fig:twitter-res} and \ref{fig:swbda-res}.
@@ -286,10 +286,9 @@ In each, the model was fit with two chains of 200 iterations of the sampler for 
 
 \begin{figure*}[t]
   \begin{center}
-    \includegraphics[width=\columnwidth]{results/twitter_line.pdf}
-    \includegraphics[width=\columnwidth]{results/swbda_line.pdf}
+    \includegraphics[width=1.5\columnwidth]{results/twitter_swbda_mod.pdf}
   \end{center}
-  \caption{(left) Categorical (red), lexical (blue), and CNW (green) alignments on the Twitter (left) and Switchboard (right) datasets. 95\% HPD intervals from WHAM shown.}\label{fig:all-res}
+  \caption{(left) Categorical (red), lexical (blue), and CNW (green) alignments plotted by category, on the Twitter (left) and Switchboard (right) datasets. 95\% HPD intervals from WHAM shown.}\label{fig:all-res}
 \end{figure*}
 
 %
@@ -307,11 +306,11 @@ In each, the model was fit with two chains of 200 iterations of the sampler for 
 %   \caption{Categorical (red), lexical (blue), and CNW (green) alignments on the Switchboard dataset. 95\% HPD intervals from WHAM shown.}\label{fig:swbda-res}
 % \end{figure}
 
-Figures \ref{fig:twitter-res} and \ref{fig:swbda-res} show the alignment on each marker category in the Twitter and Switchboard corpora. There were substantial differences in the overall rate of alignment between the corpora: Mean category alignment on Twitter was $.19$, while Switchboard category alignment was $-.051$. These differences may reflect the nature of the two discourse contexts: Replies on Twitter are composed while looking at the preceding message, encouraging the replier to take more account of the other tweeter's words, and a replier can draft and edit their reply to make it better fit the conversation.  Messages on Switchboard, on the other hand, are evanescent, so a replier must compose a reply without looking back at the message, without editing, and in real-time. Differences in the discourse structure of these corpora may also be contributing, an effect we will consider in Experiment 2.  %In Experiment 2, we will show that differences in discourse structure may also impact the differences in alignment.
+Figure \ref{fig:all-res} shows the alignment on each marker category in the Twitter and Switchboard corpora. There were substantial differences in the overall rate of alignment between the corpora: Mean category alignment on Twitter was $.19$, while Switchboard category alignment was $-.051$. These differences may reflect the nature of the two discourse contexts: Replies on Twitter are composed while looking at the preceding message, encouraging the replier to take more account of the other tweeter's words, and a replier can draft and edit their reply to make it better fit the conversation.  Messages on Switchboard, on the other hand, are evanescent, so a replier must compose a reply without looking back at the message, without editing, and in real-time. Differences in the discourse structure of these corpora may also be contributing, an effect we will consider in Experiment 2.  %In Experiment 2, we will show that differences in discourse structure may also impact the differences in alignment.
 
 Despite the difference in reply construction in the two corpora, the results across levels of alignment were similar. Alignment was found primarily at the lexical -- rather than the category -- level. Lexical and category alignment were not significantly different from each other, but the strength of lexical alignment was significantly larger than the CNW alignment, according to a $t$-test over categories (Twitter: $t(10)=.21, p<.001$; Swbd: $t(10)=.12,p=.003$). CNW alignment was significantly negative on Switchboard ($t(10)=-.11, p=.01$) and not significantly different from zero on Twitter ($t(10)=.009, p=.79$).
 
-WHAM -- unlike other previous measures -- provides estimates of alignment that are unbiased by either marker frequency or message length, but we still observed modest alignment on Twitter, replicating previous work \cite{DoyleYurovskyFrank2016,DNMGamonDumais2011}. Alignment was smaller in Switchboard, and in both cases there were no category effects. Thus, the categorical alignment results may result primarily from lexical alignment, inconsistent with an interactive priming origin for alignment.
+WHAM -- unlike other previous measures -- provides estimates of alignment that are unbiased by either marker frequency or message length, but we still observed modest alignment on Twitter, replicating previous work \cite{DoyleYurovskyFrank2016,DNMGamonDumais2011}. Alignment was smaller in Switchboard, and in both cases there were no category effects. Thus, the categorical alignment results may result primarily from lexical alignment, inconsistent with the predictions of interactive priming accounts of alignment.
 
 %The two corpora also differ in the correlations between the alignment measures. The Switchboard corpus, despite its overall tendency against category alignment, has significant positive correlations between category and lexical ($r = .71, p=.015$), and category and CNW alignment ($r = .94, p <.001$), as well as marginal positive alignment between lexical and CNW alignment ($r = .52, p = .10$).  This suggests a consistency across words within a category on Switchboard
 
@@ -319,7 +318,7 @@ WHAM -- unlike other previous measures -- provides estimates of alignment that a
 \section{Experiment 2: Discourse Acts and Alignment}
 
 % \subsubsection{Discourse Acts}
-Messages within a discourse serve a range of purposes, and this affects both their linguistic structure and their relationship with neighboring messages.  A simple yes/no question is likely to receive a short, constrained reply, while a statement of an opinion is more likely to yield a longer reply. In addition, different types of messages can either introduce new information to the conversation (e.g., statements, questions, offers) or look back at existing information (e.g., acknowledgments, reformulations, yes/no answers). We hypothesize that alignment will be substantially different depending on the discourse act, as speakers' conversational goals vary. Thus, our second experiment examines how alignment differs depending on discourse act.
+Messages within a discourse can serve a very wide range of purposes. This variety has effects for both linguistic structure and the relationship to neighboring messages. For example, a simple yes/no question is likely to receive a short, constrained reply, while a statement of an opinion is more likely to yield a longer reply. In addition, different types of messages can either introduce new information to the conversation (e.g., statements, questions, offers) or look back at existing information (e.g., acknowledgments, reformulations, yes/no answers). We hypothesize that alignment will be substantially different depending on the discourse act, as speakers' conversational goals vary. Thus, our second experiment examines how alignment differs depending on discourse act.
 % In particular, we are interested in how alignment is modulated by the discourse goal and the flexibility in the form of an utterance.
 
 We focus on a particular kind of discourse act, the backchannel \cite{Yngve1970}. Backchannels are extremely common in Switchboard, accounting for almost 20\% of utterances, and include utterances such as single words signaling understanding or misunderstanding (\textit{yeah, uh-huh, no}) or simple messages expressing empathy without trying to take a full conversational turn (\textit{It must have been tough}).  Backchannels are a particularly interesting case because their short and constrained nature makes it difficult to align on some categories (e.g., backchannels rarely contain quantifiers or prepositions), while the purpose of giving feedback to the speaker makes it important to align on others (e.g., matching the positive/negative tone or certainty of a speaker).  In addition, backchannels are primarily restricted to spoken corpora. Twitter conversations contain far fewer backchannels than Switchboard, which may account for some of their alignment differences---especially as the results of this experiment suggest that backchannels reduce overall alignment.
@@ -329,7 +328,8 @@ We focus on a particular kind of discourse act, the backchannel \cite{Yngve1970}
 
 \subsection{Methods}
 
-We use the discourse-annotated Switchboard corpus to compare alignment in conversations containing backchannels with those whose backchannels have been removed. This is done by removing every utterance classified as a backchannel from the corpus, before parsing the utterances into conversation turns as before. Twitter data is not used as we do not have discourse act annotations on it.
+We use the discourse-annotated Switchboard corpus to compare alignment in conversations containing backchannels with those whose backchannels have been removed. We make this comparison by creating a second corpus, removing every utterance classified as a backchannel from the corpus prior to parsing the utterances into conversation turns as before.
+% Twitter data is not used as we do not have discourse act annotations on it.
 
 \begin{figure}[t]
   \begin{center}
@@ -349,7 +349,7 @@ Turning to the effect of backchannels, Figure \ref{fig:swbds-res} shows the cate
   \begin{center}
     \includegraphics[width=\columnwidth]{results/swbds_line.pdf}
   \end{center}
-  \caption{Comparing alignment on the Switchboard dataset with and without backchannels. 95\% HPD intervals from WHAM shown.}\label{fig:swbds-res}
+  \caption{Comparing categorical alignment on the Switchboard dataset with and without backchannels. 95\% HPD intervals from WHAM shown.}\label{fig:swbds-res}
 \end{figure}
 
 Interestingly, the two categories that do show greater alignment when backchannels are included are certainty and negation. These categories are both important for backchannels; a negative backchannel is generally inappropriate in reply to a non-negative message, and similarly a confident backchannel would often be out of place in reply to an uncertain message. These influences of discourse acts on alignment are consistent with a discourse-strategic origin for alignment.
@@ -357,7 +357,7 @@ Interestingly, the two categories that do show greater alignment when backchanne
 \section{Discussion}
 Linguistic alignment is a prominent type of communicative accommodation, but its sources are unclear.  We presented WHAM, a length-robust extension of a probabilistic alignment model. Using this model, we find evidence that linguistic alignment is primarily lexical, and that it is strongly affected by at least some aspects of the discourse goal of a message.
 
-This combination of a primarily-lexical origin for linguistic alignment and its variation by category and discourse acts suggest that alignment is primarily a higher-level discourse strategy rather than a low-level priming-based mechanism.  This is consistent with Accommodation Theory and findings that sociological factors affect the level of observed alignment.  The effect of different discourse acts on alignment further suggests that alignment is not a completely automatic process but rather one of many discourse strategies that speakers fluidly integrate to achieve their conversational goals.
+This combination of a primarily-lexical origin for linguistic alignment and its variation by category and discourse acts suggest that alignment is primarily a higher-level discourse strategy rather than a low-level priming-based mechanism.  This set of results is consistent with both Accommodation Theory \cite{GilesCouplandCoupland1991} and the set of findings, reviewed above, that sociological factors affect the level of observed alignment.  The effect of  discourse acts on alignment further suggests that alignment is not a completely automatic process but rather one of many discourse strategies that speakers use to achieve their conversational goals.
 
 
 
